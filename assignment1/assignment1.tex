@@ -42,33 +42,44 @@ Verification of the correctness of our solution can be done using truth-tables. 
 functions to our implementations by outputting a truth table in Logisim (Project > Analyze Circuit > Table).
 We can clearly see that all of our implementations are correct.
 
-% NOT
+\subsection*{NOT} % (fold)
+\label{sub:NOT}
+
 \begin{table}[htb!]
     \centering
     \begin{tabular}{c || c || c}
-    A & Reference output & Actual output \\ \hline
+    $A$ & $\lnot A$ & Actual output \\ \hline
     1 & 0                & 0             \\
     0 & 1                & 1             \\
     \end{tabular}
 \end{table}
 
+% subsection NOT (end)
+
 % OR
+\subsection*{OR} % (fold)
+\label{sub:OR}
+
 \begin{table}[htb!]
     \centering
     \begin{tabular}{c | c || c || c}
-        A & B & Reference output & Actual output \\ \hline
-        1 & 1 & 1                & 1        \\
-        1 & 0 & 1                & 1        \\
-        0 & 1 & 1                & 1        \\
-        0 & 0 & 0                & 0        \\
+        $A$ & $B$ & $A \lor B$ & Actual output \\ \hline
+        1   & 1   & 1          & 1        \\
+        1   & 0   & 1          & 1        \\
+        0   & 1   & 1          & 1        \\
+        0   & 0   & 0          & 0        \\
     \end{tabular}
 \end{table}
 
-% AND
+% subsection OR (end)
+
+\subsection*{AND} % (fold)
+\label{sub:AND}
+
 \begin{table}[htb!]
     \centering
     \begin{tabular}{c | c || c || c}
-        A & B & Reference output & Actual output \\ \hline
+        $A$ & $B$ & $A \land B$ & Actual output \\ \hline
         1 & 1 & 1                & 1        \\
         1 & 0 & 0                & 0        \\
         0 & 1 & 0                & 0        \\
@@ -76,17 +87,23 @@ We can clearly see that all of our implementations are correct.
     \end{tabular}
 \end{table}
 
-% XOR
+% subsection AND (end)
+
+\subsection*{XOR} % (fold)
+\label{sub:XOR}
+
 \begin{table}[htb!]
     \centering
     \begin{tabular}{c | c || c || c}
-        A & B & Reference output & Actual output \\ \hline
+        $A$ & $B$ & $A \oplus B$ & Actual output \\ \hline
         1 & 1 & 0                & 0        \\
         1 & 0 & 1                & 1        \\
         0 & 1 & 1                & 1        \\
         0 & 0 & 0                & 0        \\
     \end{tabular}
 \end{table}
+
+% subsection XOR (end)
 
 \section*{G1.2 - Building a 4bit ALU}
 We have been building a 4bit ALU, with the following functions
