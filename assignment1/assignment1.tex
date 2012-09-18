@@ -1,6 +1,6 @@
 \documentclass[11pt,a4paper]{article}
 
-\usepackage[utf8]{inputenc}
+%\usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage[T1]{fontenc}
 
@@ -17,7 +17,7 @@
     %\par\vspace*{4\onelineskip}
     \par
     \vspace*{0.4cm}
-    \large Jonas Brunsgaard - 141185 \par 
+    \large Jonas Brunsgaard - 141185 \par
         Rasmus Wriedt Larsen - 070290 \par
         Martin Bjeregaard Jepsen - 170786 \par
     \vspace*{0.4cm}
@@ -36,6 +36,58 @@ It is our perception, that this report answers all the questions asked in the
 first group assignment of the course. Thus we find the assignment to be fully
 answered.
 
+\section*{G1.1 - AND, OR, NOT, XOR}
+
+Verification of the correctness of our solution can be done using truth-tables. We compare the reference
+functions to our implementations by outputting a truth table in Logisim (Project > Analyze Circuit > Table).
+We can clearly see that all of our implementations are correct.
+
+% NOT
+
+\begin{table}
+    \begin{tabular}{l || l || l}
+        A & Reference output & Actual output \\ \hline
+        1 & 0                & 0             \\
+        0 & 1                & 1             \\
+    \end{tabular}
+\end{table}
+
+% OR
+
+\begin{table}
+    \begin{tabular}{l | l || l || l}
+        A & B & Reference output & Actual output \\ \hline
+        1 & 1 & 1                & 1        \\
+        1 & 0 & 1                & 1        \\
+        0 & 1 & 1                & 1        \\
+        0 & 0 & 0                & 0        \\
+    \end{tabular}
+\end{table}
+
+% AND
+
+\begin{table}
+    \begin{tabular}{l | l || l || l}
+        A & B & Reference output & Actual output \\ \hline
+        1 & 1 & 1                & 1        \\
+        1 & 0 & 0                & 0        \\
+        0 & 1 & 0                & 0        \\
+        0 & 0 & 0                & 0        \\
+    \end{tabular}
+\end{table}
+
+% XOR
+
+\begin{table}
+    \begin{tabular}{l | l || l || l}
+        A & B & Reference output & Actual output \\ \hline
+        1 & 1 & 0                & 0        \\
+        1 & 0 & 1                & 1        \\
+        0 & 1 & 1                & 1        \\
+        0 & 0 & 0                & 0        \\
+    \end{tabular}
+\end{table}
+
 \section*{G1.2 - Building a 4bit ALU}
 We have been building a 4bit ALU, with the following functions
 
@@ -49,6 +101,7 @@ We have been building a 4bit ALU, with the following functions
     1100 & NOR \\
 
 \end{tabular}
+=======
 
 \end{document}
 
