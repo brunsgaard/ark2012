@@ -43,24 +43,22 @@ functions to our implementations by outputting a truth table in Logisim (Project
 We can clearly see that all of our implementations are correct.
 
 % NOT
-
 \begin{table}
-    \begin{tabular}{l || l || l}
-        A & Reference output & Actual output \\ \hline
-        1 & 0                & 0             \\
-        0 & 1                & 1             \\
-    \end{tabular}
+    \begin{tabular}{l || l || l}
+    A & Reference output & Actual output \\ \hline
+    1 & 0 & 0 \\
+    0 & 1& 1\\
+    \end{tabular}
 \end{table}
-
 % OR
 
 \begin{table}
     \begin{tabular}{l | l || l || l}
         A & B & Reference output & Actual output \\ \hline
-        1 & 1 & 1                & 1        \\
-        1 & 0 & 1                & 1        \\
-        0 & 1 & 1                & 1        \\
-        0 & 0 & 0                & 0        \\
+        1 & 1 & 1                & 1        \\
+        1 & 0 & 1                & 1        \\
+        0 & 1 & 1                & 1        \\
+        0 & 0 & 0                & 0        \\
     \end{tabular}
 \end{table}
 
@@ -69,10 +67,10 @@ We can clearly see that all of our implementations are correct.
 \begin{table}
     \begin{tabular}{l | l || l || l}
         A & B & Reference output & Actual output \\ \hline
-        1 & 1 & 1                & 1        \\
-        1 & 0 & 0                & 0        \\
-        0 & 1 & 0                & 0        \\
-        0 & 0 & 0                & 0        \\
+        1 & 1 & 1                & 1        \\
+        1 & 0 & 0                & 0        \\
+        0 & 1 & 0                & 0        \\
+        0 & 0 & 0                & 0        \\
     \end{tabular}
 \end{table}
 
@@ -81,10 +79,10 @@ We can clearly see that all of our implementations are correct.
 \begin{table}
     \begin{tabular}{l | l || l || l}
         A & B & Reference output & Actual output \\ \hline
-        1 & 1 & 0                & 0        \\
-        1 & 0 & 1                & 1        \\
-        0 & 1 & 1                & 1        \\
-        0 & 0 & 0                & 0        \\
+        1 & 1 & 0                & 0        \\
+        1 & 0 & 1                & 1        \\
+        0 & 1 & 1                & 1        \\
+        0 & 0 & 0                & 0        \\
     \end{tabular}
 \end{table}
 
