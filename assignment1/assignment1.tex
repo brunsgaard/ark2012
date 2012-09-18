@@ -43,7 +43,8 @@ functions to our implementations by outputting a truth table in Logisim (Project
 We can clearly see that all of our implementations are correct.
 
 % NOT
-\begin{table}
+\begin{table}[htb!]
+    \centering
     \begin{tabular}{c || c || c}
     A & Reference output & Actual output \\ \hline
     1 & 0                & 0             \\
@@ -52,7 +53,8 @@ We can clearly see that all of our implementations are correct.
 \end{table}
 
 % OR
-\begin{table}
+\begin{table}[htb!]
+    \centering
     \begin{tabular}{c | c || c || c}
         A & B & Reference output & Actual output \\ \hline
         1 & 1 & 1                & 1        \\
@@ -63,7 +65,8 @@ We can clearly see that all of our implementations are correct.
 \end{table}
 
 % AND
-\begin{table}
+\begin{table}[htb!]
+    \centering
     \begin{tabular}{c | c || c || c}
         A & B & Reference output & Actual output \\ \hline
         1 & 1 & 1                & 1        \\
@@ -74,7 +77,8 @@ We can clearly see that all of our implementations are correct.
 \end{table}
 
 % XOR
-\begin{table}
+\begin{table}[htb!]
+    \centering
     \begin{tabular}{c | c || c || c}
         A & B & Reference output & Actual output \\ \hline
         1 & 1 & 0                & 0        \\
@@ -87,8 +91,9 @@ We can clearly see that all of our implementations are correct.
 \section*{G1.2 - Building a 4bit ALU}
 We have been building a 4bit ALU, with the following functions
 
-\begin{tabular}{ c c }
-    ALU control lines & Function \\ 
+\begin{tabular}{| c | c |}[htb!]
+    \centering
+    ALU control lines & Function \\ \hline 
     0000 & AND \\
     0001 & OR \\
     0010 & add \\
@@ -97,7 +102,5 @@ We have been building a 4bit ALU, with the following functions
     1100 & NOR \\
 
 \end{tabular}
-=======
-
 \end{document}
 
