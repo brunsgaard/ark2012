@@ -44,16 +44,16 @@ We can clearly see that all of our implementations are correct.
 
 % NOT
 \begin{table}
-    \begin{tabular}{l || l || l}
+    \begin{tabular}{c || c || c}
     A & Reference output & Actual output \\ \hline
-    1 & 0 & 0 \\
-    0 & 1& 1\\
+    1 & 0                & 0             \\
+    0 & 1                & 1             \\
     \end{tabular}
 \end{table}
-% OR
 
+% OR
 \begin{table}
-    \begin{tabular}{l | l || l || l}
+    \begin{tabular}{c | c || c || c}
         A & B & Reference output & Actual output \\ \hline
         1 & 1 & 1                & 1        \\
         1 & 0 & 1                & 1        \\
@@ -63,9 +63,8 @@ We can clearly see that all of our implementations are correct.
 \end{table}
 
 % AND
-
 \begin{table}
-    \begin{tabular}{l | l || l || l}
+    \begin{tabular}{c | c || c || c}
         A & B & Reference output & Actual output \\ \hline
         1 & 1 & 1                & 1        \\
         1 & 0 & 0                & 0        \\
@@ -75,9 +74,8 @@ We can clearly see that all of our implementations are correct.
 \end{table}
 
 % XOR
-
 \begin{table}
-    \begin{tabular}{l | l || l || l}
+    \begin{tabular}{c | c || c || c}
         A & B & Reference output & Actual output \\ \hline
         1 & 1 & 0                & 0        \\
         1 & 0 & 1                & 1        \\
