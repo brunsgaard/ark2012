@@ -109,17 +109,16 @@ We can clearly see that all of our implementations are correct.
 We have been building a 4bit ALU, with the following functions
 
 \begin{table}[htb!]
-\begin{tabular}{| c | c |}
     \centering
-    ALU control lines & Function \\ \hline
-    0000 & AND \\
-    0001 & OR \\
-    0010 & add \\
-    0110 & subtract \\
-    0111 & set on less than \\
-    1100 & NOR \\
-
-\end{tabular}
+    \begin{tabular}{| c | c |}
+        ALU control lines & Function \\ \hline
+        0000 & AND \\
+        0001 & OR \\
+        0010 & add \\
+        0110 & subtract \\
+        0111 & set on less than \\
+        1100 & NOR \\
+    \end{tabular}
 \end{table}
 
 The final 4-bit ALU is created as a ripple-carry adder, as specified in COD\@.
@@ -177,10 +176,10 @@ From figure 3.2 p 226, we know that there are four cases for overflow:
 But, we can see that the two last cases are trivial. If we set C = -B:
 
 \[
-    \text{If } A >= 0, B < 0 \Rightarrow C >= 0 \\
+    A \geq 0, B < 0 \Rightarrow C \geq 0 \\
 \]
 \[
-    \text{If } A < 0, B >= 0 \Rightarrow C <0
+    A < 0, B \geq 0 \Rightarrow C < 0
 \]
 
 Because substraction works by negating $B$ and adding with $A$, we only need to catch case 1 \& 2.
@@ -216,7 +215,7 @@ that if overflow occurs:
     result < 0 \Rightarrow A > B
 \]
 \[
-    result >= 0 \Rightarrow A < B
+    result \geq 0 \Rightarrow A < B
 \]
 
 so, if overflow occurs, $A < B$ if the sign bit of the result is 0.
