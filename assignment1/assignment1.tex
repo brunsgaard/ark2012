@@ -121,5 +121,41 @@ We have been building a 4bit ALU, with the following functions
 
 \end{tabular}
 \end{table}
+
+The final 4-bit ALU is created as a ripple-carry adder, as specified in COD\@.
+It utilizes 4 1-bit ALUs built using full adders.
+
+\subsection*{Full adder} % (fold)
+\label{sub:Full_adder}
+
+\begin{table}[htb!]
+    \centering
+    \begin{tabular}{c | c || c || c}
+        $A$ & $B$ & $A \oplus B$ & $A + B$ (bitwise addition without carry) \\ \hline
+        1 & 1 & 0                & 0        \\
+        1 & 0 & 1                & 1        \\
+        0 & 1 & 1                & 1        \\
+        0 & 0 & 0                & 0        \\
+    \end{tabular}
+\end{table}
+
+The full adder adds two bits $A$ and $B$, with a carry in and carry out taken into
+consideration. We observe that $A \oplus B$ is the same as the bitwise addition
+of $A$ and $B$ without carry. Therefore
+
+\begin{equation*}
+    Sum = (A \oplus B) \oplus CarryIn
+\end{equation*}
+
+We now need to set the $CarryOut$ bit. The adder should only report a
+carry if both $A$ and $B$ are asserted, or their sum and the $CarryIn$ is asserted.
+This leaves us with the boolean expression
+
+\begin{equation*}
+    CarryOut = (A \cdot B) + (Sum \cdot CarryIn)
+\end{equation*}
+
+% subsection Full adder (end)
+
 \end{document}
 
