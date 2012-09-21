@@ -175,33 +175,51 @@ From figure 3.2 p 226, we know that there are four cases for overflow:
 \end{table}
 
 But, we can see that the two last cases are trivial. If we set C = -B:
-If A >= 0, B < 0 => C >= 0.
-If A < 0, B >= 0 => C <0.
 
-Because substraction works by negating B and adding with A, we only need to catch case 1 \& 2.
+\[
+    \text{If } A >= 0, B < 0 \Rightarrow C >= 0 \\
+\]
+\[
+    \text{If } A < 0, B >= 0 \Rightarrow C <0
+\]
+
+Because substraction works by negating $B$ and adding with $A$, we only need to catch case 1 \& 2.
 Most Significant bits for Case 1:
-A = 0, B = 0, Sum = 1 (means that CarryIn = 1, CarryOut = 0)
+
+\[
+    A = 0, B = 0, Sum = 1 \text{ (means that CarryIn = 1, CarryOut = 0)}
+\]
 
 Most Significant bits for Case 2:
-A = 1, B = 1, Sum = 0 (means that CarryIn = 0, CarryOut = 1)
 
-So we can simply make an XOR operation on CarryIn and CarryOut to see if there is overflow.
+\[
+    A = 1, B = 1, Sum = 0 \text{ (means that CarryIn = 0, CarryOut = 1)}
+\]
+
+So we can simply make an XOR operation on $CarryIn$ and $CarryOut$ to see if there is overflow.
 
 
 \subsubsection*{Set Less Than}
 
 The ALU makes an substraction operation to calculate the difference between the two numbers.
 
-A < B => A - B < B - B => A - B < 0
+\[
+    A < B \Rightarrow A - B < B - B \Rightarrow A - B < 0
+\]
 
 So we can simply check if the result is negative. (Sign bit is 1)
 
-But, we have to be careful of overflows. From the amazing table shown above, we can see 
+But, we have to be careful of overflows. From the amazing table shown above, we can see
 that if overflow occurs:
-result < 0 => A > B
-result >= 0 => A < B
 
-so, if overflow occurs, A < B if the sign bit of the result is 0.
+\[
+    result < 0 \Rightarrow A > B
+\]
+\[
+    result >= 0 \Rightarrow A < B
+\]
+
+so, if overflow occurs, $A < B$ if the sign bit of the result is 0.
 
 Bringing this all together, we can make an XOR of the sign bit of the result and the overflow detection.
 
