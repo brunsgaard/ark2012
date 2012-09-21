@@ -190,6 +190,21 @@ So we can simply make an XOR operation on CarryIn and CarryOut to see if there i
 
 \subsubsection*{Set Less Than}
 
+The ALU makes an substraction operation to calculate the difference between the two numbers.
+
+A < B => A - B < B - B => A - B < 0
+
+So we can simply check if the result is negative. (Sign bit is 1)
+
+But, we have to be careful of overflows. From the amazing table shown above, we can see 
+that if overflow occurs:
+result < 0 => A > B
+result >= 0 => A < B
+
+so, if overflow occurs, A < B if the sign bit of the result is 0.
+
+Bringing this all together, we can make an XOR of the sign bit of the result and the overflow detection.
+
 % subsection 1-bit ALU (end)
 \end{document}
 
