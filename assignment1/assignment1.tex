@@ -38,9 +38,10 @@ answered.
 
 \section*{G1.1 - AND, OR, NOT, XOR}
 
-Verification of the correctness of our solution can be done using truth-tables. We compare the reference
-functions to our implementations by outputting a truth table in Logisim (Project > Analyze Circuit > Table).
-We can clearly see that all of our implementations are correct.
+Verification of the correctness of our solution can be done using truth-tables.
+We compare the reference functions to our implementations by outputting a truth
+table in Logisim (Project > Analyze Circuit > Table). We can clearly see that
+all of our implementations are correct.
 
 \subsection*{NOT} % (fold)
 \label{sub:NOT}
@@ -88,7 +89,7 @@ We can clearly see that all of our implementations are correct.
 \end{table}
 
 % subsection AND (end)
-
+\newpage
 \subsection*{XOR} % (fold)
 \label{sub:XOR}
 
@@ -103,11 +104,8 @@ We can clearly see that all of our implementations are correct.
     \end{tabular}
 \end{table}
 
-% subsection XOR (end)
-
 \section*{G1.2 - Building a 4bit ALU}
 We have been building a 4bit ALU, with the following functions
-
 \begin{table}[htb!]
     \centering
     \begin{tabular}{| c | c |}
@@ -120,14 +118,12 @@ We have been building a 4bit ALU, with the following functions
         1100 & NOR \\
     \end{tabular}
 \end{table}
-
 The final 4-bit ALU is created as a ripple-carry adder, as specified in COD\@.
 It utilizes 4 1-bit ALUs built using full adders.
-
 \subsection*{Full adder} % (fold)
 \label{sub:Full_adder}
-
-\begin{table}[htb!]
+The full adder adds two bits $A$ and $B$, with a carry in and carry out taken into
+consideration. \begin{table}[htb!]
     \centering
     \begin{tabular}{c | c || c || c}
         $A$ & $B$ & $A \oplus B$ & $A + B$ (bitwise addition without carry) \\ \hline
@@ -137,19 +133,14 @@ It utilizes 4 1-bit ALUs built using full adders.
         0 & 0 & 0                & 0        \\
     \end{tabular}
 \end{table}
-
-The full adder adds two bits $A$ and $B$, with a carry in and carry out taken into
-consideration. We observe that $A \oplus B$ is the same as the bitwise addition
+\\ We observe that $A \oplus B$ is the same as the bitwise addition
 of $A$ and $B$ without carry. Therefore
-
 \begin{equation*}
     Sum = (A \oplus B) \oplus CarryIn
 \end{equation*}
-
 We now need to set the $CarryOut$ bit. The adder should only report a
 carry if both $A$ and $B$ are asserted, or their sum and the $CarryIn$ is asserted.
 This leaves us with the boolean expression
-
 \begin{equation*}
     CarryOut = (A \cdot B) + (Sum \cdot CarryIn)
 \end{equation*}
@@ -163,14 +154,14 @@ This leaves us with the boolean expression
 
 From figure 3.2 p 226, we know that there are four cases for overflow:
 \begin{table}[htb!]
-\begin{tabular}{| c | c | c | c |}
     \centering
-    Operation & A & B & Result indicating overflow \\ \hline
-    A + B & >= 0 & >= 0 & < 0 \\
-    A + B & < 0 & < 0 & >= 0 \\
-    A - B & >= 0 & < 0 & < 0 \\
-    A - B & < 0 & >= 0 & >= 0 \\
-\end{tabular}
+    \begin{tabular}{| c | c | c | c |}
+        Operation & A & B & Result indicating overflow \\ \hline
+        A + B & >= 0 & >= 0 & < 0 \\
+        A + B & < 0 & < 0 & >= 0 \\
+        A - B & >= 0 & < 0 & < 0 \\
+        A - B & < 0 & >= 0 & >= 0 \\
+    \end{tabular}
 \end{table}
 
 But, we can see that the two last cases are trivial. If we set C = -B:
@@ -181,47 +172,36 @@ But, we can see that the two last cases are trivial. If we set C = -B:
 \[
     A < 0, B \geq 0 \Rightarrow C < 0
 \]
-
-Because substraction works by negating $B$ and adding with $A$, we only need to catch case 1 \& 2.
-Most Significant bits for Case 1:
-
+Because substraction works by negating $B$ and adding with $A$, we only need to
+catch case 1 \& 2. Most Significant bits for Case 1:
 \[
     A = 0, B = 0, Sum = 1 \text{ (means that CarryIn = 1, CarryOut = 0)}
 \]
-
 Most Significant bits for Case 2:
-
 \[
     A = 1, B = 1, Sum = 0 \text{ (means that CarryIn = 0, CarryOut = 1)}
 \]
-
-So we can simply make an XOR operation on $CarryIn$ and $CarryOut$ to see if there is overflow.
-
+So we can simply make an XOR operation on $CarryIn$ and $CarryOut$ to see if
+there is overflow.
 
 \subsubsection*{Set Less Than}
-
-The ALU makes an substraction operation to calculate the difference between the two numbers.
-
+The ALU makes an substraction operation to calculate the difference between the
+two numbers.
 \[
     A < B \Rightarrow A - B < B - B \Rightarrow A - B < 0
 \]
-
-So we can simply check if the result is negative. (Sign bit is 1)
-
-But, we have to be careful of overflows. From the amazing table shown above, we can see
-that if overflow occurs:
-
+So we can simply check if the result is negative. (Sign bit is 1) But, we have
+to be careful of overflows. From the amazing table shown above, we can see that
+if overflow occurs:
 \[
     result < 0 \Rightarrow A > B
 \]
 \[
     result \geq 0 \Rightarrow A < B
 \]
+so, if overflow occurs, $A < B$ if the sign bit of the result is 0. Bringing
+this all together, we can make an XOR of the sign bit of the result and the
+overflow detection.
 
-so, if overflow occurs, $A < B$ if the sign bit of the result is 0.
-
-Bringing this all together, we can make an XOR of the sign bit of the result and the overflow detection.
-
-% subsection 1-bit ALU (end)
 \end{document}
 
