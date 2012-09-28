@@ -15,11 +15,11 @@ int atoi(char* string) {
   int result = 0;
   int acc = 1;
   char* ptr = string;
-	
+
   while (*ptr++ != 0) {
   }
   *ptr--;
-  
+
   while (ptr-- != string) {
     result += (*ptr - 48) * acc;
     acc *= 10;
@@ -36,13 +36,13 @@ void print_message (char* string, char* buffer) {
 
 void caesar_encryption (int cipher_shift, const char* string) {
   char buffer[MAXSIZE];
-  
+
   strcpy(buffer, string);
   print_message("The original message: ", (char *)string);
 
   encrypt(cipher_shift, buffer);
   print_message("The encrypted message: ", buffer);
-  
+
   decrypt(cipher_shift, buffer);
   print_message("The decrypted message: ", buffer);
 }
@@ -52,7 +52,7 @@ int main (int argc, char** argv) {
     printf("Usage: %s cipher_shift message\n", argv[0]);
     return -1;
   }
-  
+
   caesar_encryption(atoi(argv[1]), argv[2]);
   return 0;
 }
@@ -61,8 +61,40 @@ int main (int argc, char** argv) {
   Functions you have to implement
 */
 
-void encrypt(int cipher_shift, char* string) {
+void encrypt(int cipher_shift, char* string)
+{
+    while (*string != 0)
+    {
+        if (*string != ' ')
+        {
+            *string = (*string - 'A' + cipher_shift) % ('z' - 'A' + 1);
+            *string += 'A';
+
+            if ('[' <= *string && *string <= '`')
+            {
+                *string += '`' - '[' + 1;
+            }
+        }
+
+        string++;
+    }
 }
 
-void decrypt(int cipher_shift, char* string) {
+void decrypt(int cipher_shift, char* string)
+{
+    while (*string != 0)
+    {
+        if (*string != ' ')
+        {
+            *string = (*string - 'A' - cipher_shift) % ('z' - 'A' + 1);
+            *string += 'A';
+
+            if ('[' <= *string && *string <= '`')
+            {
+                *string -= '`' - '[' + 1;
+            }
+        }
+
+        string++;
+    }
 }
