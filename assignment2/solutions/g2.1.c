@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <ctype.h>
 
 #define MAXSIZE 32
 
@@ -61,19 +62,20 @@ int main (int argc, char** argv) {
   Functions you have to implement
 */
 
+#define ALPHA_START 'A'
+#define ALPHA_END 'Z'
+#define ALPHA_LEN 26
+
 void encrypt(int cipher_shift, char* string)
 {
+    cipher_shift = cipher_shift % ALPHA_LEN;
+
     while (*string != 0)
     {
         if (*string != ' ')
         {
-            *string = (*string - 'A' + cipher_shift) % ('z' - 'A' + 1);
-            *string += 'A';
-
-            if ('[' <= *string && *string <= '`')
-            {
-                *string += '`' - '[' + 1;
-            }
+            *string = (toupper(*string) + cipher_shift) % (ALPHA_END + 1);
+            if (*string < ALPHA_START) *string += ALPHA_START;
         }
 
         string++;
@@ -82,17 +84,14 @@ void encrypt(int cipher_shift, char* string)
 
 void decrypt(int cipher_shift, char* string)
 {
+    cipher_shift = cipher_shift % ALPHA_LEN;
+
     while (*string != 0)
     {
         if (*string != ' ')
         {
-            *string = (*string - 'A' - cipher_shift) % ('z' - 'A' + 1);
-            *string += 'A';
-
-            if ('[' <= *string && *string <= '`')
-            {
-                *string -= '`' - '[' + 1;
-            }
+            *string = *string - cipher_shift;
+            if (*string < ALPHA_START) *string += ALPHA_LEN;
         }
 
         string++;
