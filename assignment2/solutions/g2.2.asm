@@ -139,58 +139,64 @@ encrypt:
     li $t2, 65                       # t2 = 'A'
     li $t3, 91                       # t3 = '['
     li $t4, 96                       # t4 = '`'
+    li $t6, 58                       # t6 = 'z' - 'A' + 1
 
-    add $t2, $t2, $a0                # t2 = 'A' + cipher_shift
+    sub $t2, $t2, $a0                # t2 = 'A' - cipher_shift
 
     j encrypt_check
 
 encrypt_while:
     beq $t5, $t0, encrypt_inc        # if (*string != ' ')
 
-    sub $t5, $t5, $t2                # *string = (*string - 'A' - cipher_shift)
-    andi $t5, $t5, 58                # *string %= 'z' - 'A' + 1
+    sub $t5, $t5, $t2                # *string = *string - ('A' - cipher_shift)
+    div $t5, $t6
+    mfhi $t5                         # *string %= 'z' - 'A' + 1
     addi $t5, $t5, 65                # *string += 'A'
 
     blt $t5, $t3, encrypt_inc        # if (*string < '[')
     bgt $t5, $t4, encrypt_inc        # if (*string > '`')
 
-    sub $t4, $t4, $t1                # *string -= '`' - '[' + 1`
+    add $t5, $t5, $t1                # *string = *string + ('`' - '[' + 1)
 
 encrypt_inc:
+    sb $t5, ($a1)
     addi $a1, $a1, 1                 # string++
 
 encrypt_check:
-    lw $t5, 0($a1)
+    lbu $t5, ($a1)
     bne $t5, $zero, encrypt_while   # while (*string != 0)
-	jr $ra			            	# Return to caller
+    jr $ra			            	# Return to caller
 
 decrypt:
     li $t0, 32                       # t0 = ' '
-    li $t1, 6                        # t1 = '`' - '[' + 1
+    li $t1, 186                      # t1 = '`' + '[' - 1
     li $t2, 65                       # t2 = 'A'
     li $t3, 91                       # t3 = '['
     li $t4, 96                       # t4 = '`'
+    li $t6, 58                       # t6 = 'z' - 'A' + 1
 
-    sub $t2, $t2, $a0                # t2 = 'A' - cipher_shift
+    add $t2, $t2, $a0                # t2 = 'A' + cipher_shift
 
     j decrypt_check
 
 decrypt_while:
     beq $t5, $t0, decrypt_inc        # if (*string != ' ')
 
-    sub $t5, $t5, $t2                # *string = (*string - 'A' - cipher_shift)
-    andi $t5, $t5, 58                # *string %= 'z' - 'A' + 1
+    sub $t5, $t5, $t2                # *string = *string - ('A' + cipher_shift)
+    div $t5, $t6
+    mfhi $t5                         # *string %= 'z' - 'A' + 1
     addi $t5, $t5, 65                # *string += 'A'
 
     blt $t5, $t3, decrypt_inc        # if (*string < '[')
     bgt $t5, $t4, decrypt_inc        # if (*string > '`')
 
-    sub $t4, $t4, $t1                # *string -= '`' - '[' + 1`
+    sub $t5, $t5, $t1                # *string = *string - ('`' + '[' - 1)
 
 decrypt_inc:
+    sb $t5, ($a1)
     addi $a1, $a1, 1                 # string++
 
-decrypt_while:
-    lw $t5, 0($a1)
+decrypt_check:
+    lbu $t5, ($a1)
     bne $t5, $zero, decrypt_while   # while (*string != 0)
-	jr $ra	             			# Return to caller
+    jr $ra	             			# Return to caller
