@@ -68,11 +68,12 @@ int main (int argc, char** argv) {
 
 void encrypt(int cipher_shift, char* string)
 {
+    while (cipher_shift < 0) cipher_shift += ALPHA_LEN;
     cipher_shift = cipher_shift % ALPHA_LEN;
 
     while (*string != 0)
     {
-        if (*string != ' ')
+        if (isalpha(*string))
         {
             *string = (toupper(*string) + cipher_shift) % (ALPHA_END + 1);
             if (*string < ALPHA_START) *string += ALPHA_START;
@@ -84,16 +85,5 @@ void encrypt(int cipher_shift, char* string)
 
 void decrypt(int cipher_shift, char* string)
 {
-    cipher_shift = cipher_shift % ALPHA_LEN;
-
-    while (*string != 0)
-    {
-        if (*string != ' ')
-        {
-            *string = *string - cipher_shift;
-            if (*string < ALPHA_START) *string += ALPHA_LEN;
-        }
-
-        string++;
-    }
+    encrypt(-cipher_shift, string);
 }
