@@ -173,11 +173,14 @@ encrypt_while:
     ####################
 
     slti $t1, $t0, 97
-    bne $t1, $zero, encrypt_inc
+    bne $t1, $zero, encrypt_do
 
+    # Convert lowercase characters to uppercase
+    # by subtracting the ascii table offset
     li $t2, 32
     sub $t0, $t0, $t2                # *string -= ('a' - 'A')
 
+encrypt_do:
     ###########
     # encrypt #
     ###########
@@ -201,6 +204,12 @@ encrypt_check:
     jr $ra			            	# Return to caller
 
 decrypt:
-    sub $a0, $zero, $a0             # cipher_shift = -cipher_shift
+    sub $sp, $sp, 4
+    sw $ra, 0($sp)
+
+    neg $a0, $a0                    # cipher_shift = -cipher_shift
     jal encrypt                     # encrypt(-cipher_shift, string)
+
+    lw $ra, 0($sp)
+    add $sp, $sp, 4
     jr $ra	             			# Return to caller
