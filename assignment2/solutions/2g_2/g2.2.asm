@@ -134,69 +134,73 @@ fin:
 # The argument 'cipher_shift' is in '$a0' and 'string' in '$a1'
 
 encrypt:
-    li $t0, 32                       # t0 = ' '
-    li $t1, 6                        # t1 = '`' - '[' + 1
-    li $t2, 65                       # t2 = 'A'
-    li $t3, 91                       # t3 = '['
-    li $t4, 96                       # t4 = '`'
-    li $t6, 58                       # t6 = 'z' - 'A' + 1
+    j normalize_check
 
-    sub $t2, $t2, $a0                # t2 = 'A' - cipher_shift
+normalize:
+    addi $a0, $a0, 26                # cipher_shift += ALPHA_LEN
+
+normalize_check:
+    slt $t0, $a0, $zero
+    bne $t0, $zero, normalize        # while (cipher_shift < 0)
+    li $t0, 26
+    div $a0, $t0
+    mfhi $a0                         # cipher_shift %= ALPHA_LEN
 
     j encrypt_check
 
 encrypt_while:
-    beq $t5, $t0, encrypt_inc        # if (*string != ' ')
+    ####################
+    # isalpha(*string) #
+    ####################
 
-    sub $t5, $t5, $t2                # *string = *string - ('A' - cipher_shift)
-    div $t5, $t6
-    mfhi $t5                         # *string %= 'z' - 'A' + 1
-    addi $t5, $t5, 65                # *string += 'A'
+    li $t1, 65
+    slt $t2, $t0, $t1
+    bne $t2, $zero, encrypt_inc      # if (*string < 'A')
 
-    blt $t5, $t3, encrypt_inc        # if (*string < '[')
-    bgt $t5, $t4, encrypt_inc        # if (*string > '`')
+    li $t1, 122
+    slt $t2, $t1, $t0
+    bne $t2, $zero, encrypt_inc      # if (*string > 'z')
 
-    add $t5, $t5, $t1                # *string = *string + ('`' - '[' + 1)
+    li $t1, 90
+    slt $t2, $t1, $t0                # if (*string >= '[')
+    li $t1, 97
+    slt $t3, $t0, $t1                # if (*string <= '`')
+    and $t2, $t2, $t3
+    bne $t2, $zero, encrypt_inc
+
+    ####################
+    # toupper(*string) #
+    ####################
+
+    slti $t1, $t0, 97
+    bne $t1, $zero, encrypt_inc
+
+    li $t2, 32
+    sub $t0, $t0, $t2                # *string -= ('a' - 'A')
+
+    ###########
+    # encrypt #
+    ###########
+
+    add $t0, $t0, $a0                # *string += cipher_shift
+    li $t1, 91
+    div $t0, $t1
+    mfhi $t0                         # *string %= ALPHA_END + 1
+
+    slti $t1, $t0, 65
+    beq $t1, $zero, encrypt_inc      # if (*string < ALPHA_START)
+    addi $t0, $t0, 65                # *string += ALPHA_START
 
 encrypt_inc:
-    sb $t5, ($a1)
+    sb $t0, ($a1)
     addi $a1, $a1, 1                 # string++
 
 encrypt_check:
-    lbu $t5, ($a1)
-    bne $t5, $zero, encrypt_while   # while (*string != 0)
+    lbu $t0, ($a1)
+    bne $t0, $zero, encrypt_while   # while (*string != 0)
     jr $ra			            	# Return to caller
 
 decrypt:
-    li $t0, 32                       # t0 = ' '
-    li $t1, 186                      # t1 = '`' + '[' - 1
-    li $t2, 65                       # t2 = 'A'
-    li $t3, 91                       # t3 = '['
-    li $t4, 96                       # t4 = '`'
-    li $t6, 58                       # t6 = 'z' - 'A' + 1
-
-    add $t2, $t2, $a0                # t2 = 'A' + cipher_shift
-
-    j decrypt_check
-
-decrypt_while:
-    beq $t5, $t0, decrypt_inc        # if (*string != ' ')
-
-    sub $t5, $t5, $t2                # *string = *string - ('A' + cipher_shift)
-    div $t5, $t6
-    mfhi $t5                         # *string %= 'z' - 'A' + 1
-    addi $t5, $t5, 65                # *string += 'A'
-
-    blt $t5, $t3, decrypt_inc        # if (*string < '[')
-    bgt $t5, $t4, decrypt_inc        # if (*string > '`')
-
-    sub $t5, $t5, $t1                # *string = *string - ('`' + '[' - 1)
-
-decrypt_inc:
-    sb $t5, ($a1)
-    addi $a1, $a1, 1                 # string++
-
-decrypt_check:
-    lbu $t5, ($a1)
-    bne $t5, $zero, decrypt_while   # while (*string != 0)
+    sub $a0, $zero, $a0             # cipher_shift = -cipher_shift
+    jal encrypt                     # encrypt(-cipher_shift, string)
     jr $ra	             			# Return to caller
