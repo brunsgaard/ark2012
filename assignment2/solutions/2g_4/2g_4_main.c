@@ -2,6 +2,12 @@
 #include <stdio.h>
 #include <string.h>
 
+int readReg(int reg);
+void writeReg(int reg, int data);
+int toReg(char* in);
+int regValFrmExp(char* in);
+int swlwAddr(char* in);
+
 int registers[32];
 
 int readReg(int reg)
@@ -67,19 +73,21 @@ int regValFrmExp(char* in)
 int swlwAddr(char* in)
 {
 	int offset;
-	char* b;
-
-	sscanf(in,"%d(%s)",&offset,b);
-
-	return offset + readReg(toReg(b));
+	char b[10];
+	int regVal;
+	sscanf(in,"%d(%s)", &offset, b);
+	regVal = readReg( toReg(b) );
+	return regVal + offset;
 }
 
-void main()
+int main()
 {
 	writeReg(toReg("$t0"), 16); // $t0 = 16
     printf("read $8: %d\n", regValFrmExp("$8") ); // $8 is 16, as $t0 == $8
     printf("read 1337 %d\n", regValFrmExp("1337") );
 
-    printf("%d\n", swlwAddr("0($8)"));
+    printf("%d\n", swlwAddr("0($8)") );
     printf("%d\n", swlwAddr("4($8)"));
+	
+    return 0;
 }
