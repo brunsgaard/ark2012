@@ -12,7 +12,7 @@ int readReg(int reg)
 void writeReg(int reg, int data)
 {
 	if (reg == 0) { return; }
-	else if (reg == 29) 
+	else if (reg == 29)
 	{
 		// handle changes to $sp
 	}
@@ -20,7 +20,7 @@ void writeReg(int reg, int data)
 	registers[reg] = data;
 }
 
-int toReg(char* in)
+int toReg(char *in)
 {
 	//remove the $ as we don't care about it
 	in++;
@@ -56,11 +56,11 @@ int toReg(char* in)
 
 int regValFrmExp(char* in)
 {
-	if ( in[0] == '$' ) 
-	{ 
+	if ( in[0] == '$' )
+	{
 		return readReg( toReg(in) );
 	}
-	
+
 	return atoi(in);
 }
 
