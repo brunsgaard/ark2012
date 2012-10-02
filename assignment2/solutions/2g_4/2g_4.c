@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "mips_base.h"
 
-int main(int args, cont char *argv[])
+int main(int argc, const char *argv[])
 {
     if (argc != 2)
     {
