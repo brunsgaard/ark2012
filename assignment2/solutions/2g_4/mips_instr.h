@@ -14,5 +14,4 @@ void beq_instr (int rs, int rt, Label label);
 void j_instr (Label label);
 void syscall_instr ();
 
-#else
 #endif

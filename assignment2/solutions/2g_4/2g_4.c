@@ -1,4 +1,6 @@
 #include <stdio.h>
+
+#include "config.h"
 #include "mips_base.h"
 
 int main(int argc, const char *argv[])

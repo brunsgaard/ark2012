@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "config.h"
 #include "mips_parser.h"
 #include "mips_instr.h"
 
@@ -28,7 +29,7 @@ void parse_line (const char *line)
 {
 }
 
-char* parse_labels (char* line)
+char *parse_labels (char *line)
 {
     char outLabel[30];
     char colonpresent[2];

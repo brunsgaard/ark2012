@@ -1,9 +1,6 @@
 #ifndef MIPS_BASE_H
 #define MIPS_BASE_H
 
-#define MEM_SIZE 1024
-#define STACK_START 1023
-
 #define REG_ZERO 0
 #define REG_AT 1
 #define REG_V0 2
@@ -54,5 +51,4 @@ int swlwAddr(char* in);
 
 void run_file (const char *filename);
 
-#else
 #endif

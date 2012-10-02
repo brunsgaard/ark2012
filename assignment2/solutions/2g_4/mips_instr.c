@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "config.h"
 #include "mips_base.h"
 #include "mips_instr.h"
 
