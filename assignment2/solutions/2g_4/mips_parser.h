@@ -3,6 +3,8 @@
 
 void parse_file (const char *filename);
 void parse_line (const char *line);
+char* parse_labels (char* line);
+void parse_instruction (char* line);
 
 #else
 #endif

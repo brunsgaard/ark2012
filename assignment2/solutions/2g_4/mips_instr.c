@@ -36,12 +36,17 @@ void j_instr(Label label)
     pc = label.location;
 }
 
-int lw_instr (int addr)
+void lw_instr (int toreg, int addr)
 {
-	return mem[addr];
+	writeReg(toreg, mem[addr]);
 }
 
 void sw_instr (int addr, int data)
 {
 	mem[addr] = data;
+}
+
+void syscall_instr()
+{
+	//TODO: not implemented
 }

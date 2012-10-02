@@ -26,5 +26,9 @@ int main()
 	printf("%s\n", test2->location);
 	//*/
 
+	writeReg(toReg("$t0"), 16); // $t0 = 16
+	parse_instruction("		add $1, $t0, 4");
+	printf("%d\n", regValFrmExp("$1"));
+
     return 0;
 }

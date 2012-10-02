@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "mips_parser.h"
 #include "mips_instr.h"
@@ -31,7 +32,7 @@ char* parse_labels (char* line)
 {
     char outLabel[30];
     char colonpresent[2];
-    char rest[30];
+    char *rest = (char *) malloc(30 * sizeof(char));
 
     outLabel[0] = '\0';
     colonpresent[0] = '\0';
@@ -47,11 +48,20 @@ char* parse_labels (char* line)
     else if ( numArgs == 2 )
     {
         // a label with no code after
+
+        //TODO: Add label to array;
     }
     else if ( numArgs == 3 )
     {
         // a label with code after
+
+        //TODO: remember to free after using
+
+        return rest;
     }
+
+    free(rest);
+    return NULL;
 }
 
 void parse_instruction(char* line)
@@ -68,4 +78,51 @@ void parse_instruction(char* line)
 
     sscanf(line, " %[a-zA-Z] %s %s %s", cmd, arg1, arg2, arg3 );
     //printf("Command=%s a1=%s a2=%s a3=%s\n", cmd, arg1, arg2, arg3);
+
+    if ( strncmp(cmd, "add", 3) == 0 )
+    {
+        add_instr( toReg(arg1), regValFrmExp(arg2), regValFrmExp(arg3) );
+    }
+    else if ( strncmp(cmd, "sub", 3) == 0)
+    {
+        sub_instr( toReg(arg1), regValFrmExp(arg2), regValFrmExp(arg3) );
+    }
+    else if ( strncmp(cmd, "or", 2) == 0)
+    {
+        or_instr( toReg(arg1), regValFrmExp(arg2), regValFrmExp(arg3) );
+    }
+    else if ( strncmp(cmd, "and", 3) == 0)
+    {
+        and_instr( toReg(arg1), regValFrmExp(arg2), regValFrmExp(arg3) );
+    }
+    else if ( strncmp(cmd, "slt", 3) == 0)
+    {
+        slt_instr( toReg(arg1), regValFrmExp(arg2), regValFrmExp(arg3) );
+    }
+    else if ( strncmp(cmd, "lw", 2) == 0)
+    {
+        lw_instr( toReg(arg1), swlwAddr(arg2) );
+    }
+    else if ( strncmp(cmd, "sw", 2) == 0)
+    {
+        sw_instr( toReg(arg1), swlwAddr(arg2) );
+    }
+    else if ( strncmp(cmd, "beq", 3) == 0)
+    {
+        //TODO: fetch the matcing label
+        Label label;
+        beq_instr( regValFrmExp(arg1), regValFrmExp(arg2), label );
+    }
+    else if ( strncmp(cmd, "j", 1) == 0)
+    {
+        //TODO: fetch the matcing label
+        Label label;
+        j_instr( label );
+    }
+    else if ( strncmp(cmd, "syscall", 7) == 0)
+    {
+        syscall_instr();
+    }
+
+    //TODO: Meta instructions
 }
