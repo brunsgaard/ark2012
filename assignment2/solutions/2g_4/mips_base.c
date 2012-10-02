@@ -2,16 +2,6 @@
 
 #include "mips_base.h"
 
-// PROTOTYPES
-
-int readReg(int reg);
-void writeReg(int reg, int data);
-int toReg(char* in);
-int regValFrmExp(char* in);
-int swlwAddr(char* in);
-
-// CODE
-
 int mem[2048];
 int reg[32];
 int ip;

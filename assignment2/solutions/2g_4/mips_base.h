@@ -5,6 +5,7 @@ extern int ip;
 extern int fp;
 extern int sp;
 extern char* nextInstr;
+extern int mem[2048];
 
 typedef struct {
     char *name;

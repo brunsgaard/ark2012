@@ -19,9 +19,9 @@ int main()
 	char* hej = "hej";
 	char* martin = "martin";
 	Label test = {hej, martin};
+	printf("%s\n", test.name);
 
 	Label* test2 = &test;
-
 	printf("%s\n", test2->location);
 
     return 0;

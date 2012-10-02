@@ -1,3 +1,5 @@
+#include "mips_base.h"
+
 #ifndef MIPS_INSTR_H
 #define MIPS_INSTR_H
 
