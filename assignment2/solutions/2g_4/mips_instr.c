@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #include "mips_base.h"
 #include "mips_instr.h"
 
@@ -48,5 +50,18 @@ void sw_instr (int addr, int data)
 
 void syscall_instr()
 {
-	//TODO: not implemented
+	int service = reg[REG_V0];
+
+	switch (service)
+    {
+        // Print integer
+        case 1:
+	        printf("%d", reg[REG_A0]);
+	        break;
+
+        // Read integer
+        case 5:
+            scanf("%i", &reg[REG_V0]);
+            break;
+    }
 }

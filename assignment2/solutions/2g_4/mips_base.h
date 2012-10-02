@@ -39,7 +39,7 @@
 
 extern char* pc;
 extern int mem[MEM_SIZE];
-extern int reg[32]
+extern int reg[32];
 
 typedef struct {
     char *name;
