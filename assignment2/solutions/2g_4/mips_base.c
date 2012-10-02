@@ -4,6 +4,7 @@
 #include <ctype.h>
 
 #include "mips_base.h"
+#include "mips_parser.h"
 
 int mem[MEM_SIZE];
 int reg[32];
@@ -75,4 +76,24 @@ int swlwAddr(char* in)
 	sscanf(in,"%d(%s)", &offset, b);
 	regVal = readReg( toReg(b) );
 	return regVal + offset;
+}
+
+void run_file (char *filename)
+{
+    // First pass
+    parse_file(filename);
+
+    // Initialize machine
+    memset(mem, 0, MEM_SIZE);
+    memset(reg, 0, 32);
+    reg[REG_SP] = STACK_START;
+    reg[REG_FP] = STACK_START;
+
+    // Run code
+    while (1)
+    {
+        // Run the current instruction
+
+        pc++;
+    }
 }

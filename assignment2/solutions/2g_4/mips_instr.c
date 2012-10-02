@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <stdio.h>
 
 #include "mips_base.h"
@@ -50,9 +51,9 @@ void sw_instr (int addr, int data)
 
 void syscall_instr()
 {
-	int service = reg[REG_V0];
+    int service = reg[REG_V0];
 
-	switch (service)
+    switch (service)
     {
         // Print integer
         case 1:
@@ -62,6 +63,11 @@ void syscall_instr()
         // Read integer
         case 5:
             scanf("%i", &reg[REG_V0]);
+            break;
+
+        // Exit
+        case 10:
+            exit(reg[REG_A0]);
             break;
     }
 }
