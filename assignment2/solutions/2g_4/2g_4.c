@@ -5,7 +5,7 @@ int main(int argc, const char *argv[])
 {
     if (argc != 2)
     {
-        printf("You must add a filename as argument");
+        printf("Usage: %s <filename>", argv[0]);
         return -1;
     }
 
