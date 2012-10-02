@@ -8,7 +8,7 @@
 
 void parse_file (const char *filename)
 {
-    char linebuf[1024];
+    char linebuf[LINE_LENGTH];
     FILE *fp = fopen(filename, "r");
 
     if (!fp)
