@@ -2,7 +2,7 @@
 #define MIPS_BASE_H
 
 #define MEM_SIZE 1024
-#define STACK_SIZE 256
+#define STACK_START 1023
 
 #define REG_ZERO 0
 #define REG_AT 1
