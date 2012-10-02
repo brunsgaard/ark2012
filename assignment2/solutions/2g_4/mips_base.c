@@ -78,7 +78,7 @@ int swlwAddr(char* in)
 	return regVal + offset;
 }
 
-void run_file (char *filename)
+void run_file (const char *filename)
 {
     // First pass
     parse_file(filename);
