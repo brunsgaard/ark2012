@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <stdio.h>
 #include <strings.h>
 #include <ctype.h>
@@ -5,7 +6,6 @@
 #include "mips_base.h"
 
 int mem[MEM_SIZE];
-int stack[STACK_SIZE];
 int reg[32];
 char* pc;
 
