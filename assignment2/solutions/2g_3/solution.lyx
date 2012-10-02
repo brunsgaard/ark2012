@@ -1,0 +1,229 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Group assignment 2 - ARK
+\end_layout
+
+\begin_layout Author
+Martin Bjerregaard Jepsen - 251190
+\begin_inset Newline newline
+\end_inset
+
+Rasmus Wriedt Larsen
+\begin_inset Newline newline
+\end_inset
+
+Jonas Brunsgaard
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+G2.3 Unexpected behaviour
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename stack.pdf
+	lyxscale 50
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Overview of the stack before and after strcpy
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The file hack.asm implements a buffer-overflow against the g2 code.
+ The function 
+\begin_inset Formula $\texttt{strcpy}$
+\end_inset
+
+ will continue to copy chars into the destination buffer until it hits a
+ null byte.
+ As 
+\begin_inset Formula $\texttt{MAXSIZE}$
+\end_inset
+
+ is defined to be 32 bytes, a src containing more bytes than this will overrun
+ the buffer boundary and write into adjacent memory.
+ 
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+char* strcpy(char* dst, const char* src) {
+\end_layout
+
+\begin_layout Plain Layout
+
+  while(*dst++ = *src++) {
+\end_layout
+
+\begin_layout Plain Layout
+
+  }
+\end_layout
+
+\begin_layout Plain Layout
+
+  return dst;
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As seen in Figure 1, this will in our case result in the return address
+ of the 
+\begin_inset Formula $\texttt{caesar\_encryption}$
+\end_inset
+
+ function being overwritten by the last word of the input string.
+ When 
+\begin_inset Formula $\texttt{caesar\_encryption}$
+\end_inset
+
+ returns, the machine will then attempt to run the code present at the location
+ indicated by injected return address.
+ In the case of the hack.asm file, this new return address points at the
+ stack location containing the input string.
+ Thus one could inject code directly into the process and own the program.
+\end_layout
+
+\begin_layout Standard
+The fix for this problem is to use 
+\begin_inset Formula $\texttt{strncpy}$
+\end_inset
+
+ instead of 
+\begin_inset Formula $\texttt{strcpy}$
+\end_inset
+
+.
+ This function is included in the 
+\begin_inset Formula $\texttt{string.h}$
+\end_inset
+
+ library, and will only transfer a specified amount of bytes.
+ We swap the use of 
+\begin_inset Formula $\texttt{strcpy}$
+\end_inset
+
+ in line 41 with the code
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+strncpy(buffer, string, MAXSIZE - 1);
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
