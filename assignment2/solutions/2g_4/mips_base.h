@@ -39,7 +39,6 @@
 
 extern char* pc;
 extern int mem[MEM_SIZE];
-extern int stack[STACK_SIZE];
 
 typedef struct {
     char *name;
