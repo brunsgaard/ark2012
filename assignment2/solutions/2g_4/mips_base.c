@@ -5,9 +5,10 @@
 
 #include "mips_base.h"
 
-int mem[2048];
+int mem[MEM_SIZE];
+int stack[STACK_SIZE];
 int reg[32];
-char* ip;
+char* pc;
 
 Label *labels;
 

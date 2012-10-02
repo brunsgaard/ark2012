@@ -37,7 +37,8 @@
 #define REG_FP 30
 #define REG_RA 31
 
-extern char* ip;
+extern char* pc;
+extern int mem[MEM_SIZE];
 
 typedef struct {
     char *name;
