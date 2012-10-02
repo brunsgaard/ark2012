@@ -28,12 +28,12 @@ void slt_instr(int rd, int rs, int rt)
 
 void beq_instr(int rs, int rt, Label label)
 {
-    if (rs == rt) nextInstr = label.location;
+    if (rs == rt) pc = label.location;
 }
 
 void j_instr(Label label)
 {
-    nextInstr = label.location;
+    pc = label.location;
 }
 
 int lw_instr (int addr)

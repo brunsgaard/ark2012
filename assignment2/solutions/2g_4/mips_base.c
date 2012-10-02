@@ -1,14 +1,13 @@
 #include <stdio.h>
+#include <strings.h>
+#include <ctype.h>
 
 #include "mips_base.h"
 
-int mem[2048];
+int mem[MEM_SIZE];
+int stack[STACK_SIZE];
 int reg[32];
-int ip;
-int fp;
-int sp;
-
-char* nextInstr;
+char* pc;
 
 Label *labels;
 
