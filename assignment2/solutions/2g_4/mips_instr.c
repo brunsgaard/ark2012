@@ -41,7 +41,7 @@ int lw_instr (int addr)
 	return mem[addr];
 }
 
-int sw_instr (int addr, int data)
+void sw_instr (int addr, int data)
 {
 	mem[addr] = data;
 }

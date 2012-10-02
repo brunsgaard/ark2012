@@ -9,7 +9,7 @@ void slt_instr (int rd, int rs, int rt);
 void beq_instr (int rs, int rt, Label label);
 void j_instr (Label label);
 int lw_instr (int addr);
-int sw_instr (int addr, int data);
+void sw_instr (int addr, int data);
 void syscall_instr ();
 
 #else
