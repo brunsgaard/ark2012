@@ -57,9 +57,11 @@ void parse_file (const char *filename)
 
 void parse_line (const char *line)
 {
+    /*
     code_mem[0] = line;
     parse_labels(line);
     code_mem ++;
+    */
     // Add labels to label list
     // Add code to code list
     // Run meta-instructions

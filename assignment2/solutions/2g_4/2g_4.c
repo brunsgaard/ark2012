@@ -3,10 +3,10 @@
 #include "config.h"
 #include "mips_parser.h"
 
-int main(int argc, const char *argv[])
+void pleasekeepmytestingfunction()
 {
     // KEEP MY FREAKING TESTING FUNCTIONS!!!!
-    
+
     /*
     writeReg(toReg("$t0"), 16); // $t0 = 16
     printf("read $8: %d\n", regValFrmExp("$8") ); // $8 is 16, as $t0 == $8
@@ -29,6 +29,29 @@ int main(int argc, const char *argv[])
     parse_instruction("     add $1, $t0, 4");
     printf("%d\n", regValFrmExp("$1"));
     //*/
+
+    /*
+    char* hejmartin = "hej";
+    char* martinhej ="martin";
+    char* lala ="lala";
+
+    printf("%s\n", hejmartin);
+
+    char* testarr[2048];
+
+    printf("%s\n", "pis");
+
+    testarr[0] = hejmartin;
+    testarr[1] = martinhej;
+    testarr[3] = lala;
+    printf("%s\n", "nå");
+    printf("%s\n", (char*) testarr[1] );
+    //*/
+}
+
+int main(int argc, const char *argv[])
+{
+    pleasekeepmytestingfunction();
 
     if (argc != 2)
     {
