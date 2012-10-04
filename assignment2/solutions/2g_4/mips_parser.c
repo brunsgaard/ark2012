@@ -57,12 +57,9 @@ void parse_file (const char *filename)
 
 void parse_line (const char *line)
 {
-    if ( 1 )
-    {
-        code_mem[0] = line;
-        parse_labels(line);
-        code_mem ++;
-    }
+    code_mem[0] = line;
+    parse_labels(line);
+    code_mem ++;
     // Add labels to label list
     // Add code to code list
     // Run meta-instructions
@@ -71,13 +68,13 @@ void parse_line (const char *line)
 void run_meta (const char *instr)
 {
     // .space
-    if (strncmp(instr, ".space", 6) == 0)
+    if (strcmp(instr, ".space" ) == 0)
     {
 
     }
 
     // .asciiz
-    if (strncmp(instr, ".asciiz", 7) == 0)
+    if (strcmp(instr, ".asciiz" ) == 0)
     {
 
     }
@@ -85,6 +82,7 @@ void run_meta (const char *instr)
 
 void parse_labels (const char *line)
 {
+    /*
     char outLabel[30];
     char colonpresent[2];
     char *rest = (char *) malloc(30 * sizeof(char));
@@ -114,6 +112,7 @@ void parse_labels (const char *line)
     {
         free(rest);
     }
+    */
 }
 
 void parse_instruction(char* line)
@@ -131,47 +130,47 @@ void parse_instruction(char* line)
     sscanf(line, " %[a-zA-Z] %s %s %s", cmd, arg1, arg2, arg3 );
     //printf("Command=%s a1=%s a2=%s a3=%s\n", cmd, arg1, arg2, arg3);
 
-    if ( strncmp(cmd, "add", 3) == 0 )
+    if ( strcmp(cmd, "add") == 0 )
     {
         add_instr( toReg(arg1), regValFrmExp(arg2), regValFrmExp(arg3) );
     }
-    else if ( strncmp(cmd, "sub", 3) == 0)
+    else if ( strcmp(cmd, "sub") == 0)
     {
         sub_instr( toReg(arg1), regValFrmExp(arg2), regValFrmExp(arg3) );
     }
-    else if ( strncmp(cmd, "or", 2) == 0)
+    else if ( strcmp(cmd, "or") == 0)
     {
         or_instr( toReg(arg1), regValFrmExp(arg2), regValFrmExp(arg3) );
     }
-    else if ( strncmp(cmd, "and", 3) == 0)
+    else if ( strcmp(cmd, "and") == 0)
     {
         and_instr( toReg(arg1), regValFrmExp(arg2), regValFrmExp(arg3) );
     }
-    else if ( strncmp(cmd, "slt", 3) == 0)
+    else if ( strcmp(cmd, "slt") == 0)
     {
         slt_instr( toReg(arg1), regValFrmExp(arg2), regValFrmExp(arg3) );
     }
-    else if ( strncmp(cmd, "lw", 2) == 0)
+    else if ( strcmp(cmd, "lw") == 0)
     {
         lw_instr( toReg(arg1), swlwAddr(arg2) );
     }
-    else if ( strncmp(cmd, "sw", 2) == 0)
+    else if ( strcmp(cmd, "sw") == 0)
     {
         sw_instr( toReg(arg1), swlwAddr(arg2) );
     }
-    else if ( strncmp(cmd, "beq", 3) == 0)
+    else if ( strcmp(cmd, "beq") == 0)
     {
         //TODO: fetch the matcing label
         Label label;
         beq_instr( regValFrmExp(arg1), regValFrmExp(arg2), label );
     }
-    else if ( strncmp(cmd, "j", 1) == 0)
+    else if ( strcmp(cmd, "j") == 0)
     {
         //TODO: fetch the matcing label
         Label label;
         j_instr( label );
     }
-    else if ( strncmp(cmd, "syscall", 7) == 0)
+    else if ( strcmp(cmd, "syscall") == 0)
     {
         syscall_instr();
     }
