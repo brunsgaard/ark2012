@@ -6,6 +6,26 @@
 #include "mips_parser.h"
 #include "mips_instr.h"
 
+void run_file (const char *filename)
+{
+    // First pass
+    parse_file(filename);
+
+    // Initialize machine
+    memset(mem, 0, MEM_SIZE);
+    memset(reg, 0, 32);
+    reg[REG_SP] = STACK_START;
+    reg[REG_FP] = STACK_START;
+
+    // Run code
+    while (1)
+    {
+        // Run the current instruction
+
+        pc++;
+    }
+}
+
 void parse_file (const char *filename)
 {
     char linebuf[LINE_LENGTH];

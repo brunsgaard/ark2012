@@ -49,6 +49,4 @@ int toReg(char* in);
 int regValFrmExp(char* in);
 int swlwAddr(char* in);
 
-void run_file (const char *filename);
-
 #endif

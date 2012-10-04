@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #include "config.h"
-#include "mips_base.h"
+#include "mips_parser.h"
 
 int main(int argc, const char *argv[])
 {
