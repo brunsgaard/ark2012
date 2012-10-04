@@ -36,11 +36,11 @@
 
 extern int mem[MEM_SIZE];
 extern int reg[32];
-extern char** pc;
+extern int pc;
 
 typedef struct {
     char *name;
-    char **location;
+    int location;
 } Label;
 
 int readReg(int regNum);

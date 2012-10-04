@@ -25,9 +25,7 @@ void run_file (const char *filename)
     while (1)
     {
         // Run the current instruction
-
-        parse_instruction(*pc);
-
+        parse_instruction(code_mem[pc]);
         pc++;
     }
 }
@@ -68,13 +66,13 @@ void parse_line (const char *line)
 void run_meta (const char *instr)
 {
     // .space
-    if (strcmp(instr, ".space" ) == 0)
+    if (strcmp(instr, ".space") == 0)
     {
 
     }
 
     // .asciiz
-    if (strcmp(instr, ".asciiz" ) == 0)
+    if (strcmp(instr, ".asciiz") == 0)
     {
 
     }
@@ -101,7 +99,7 @@ void parse_labels (const char *line)
         Label newLabel = {outLabel, code_mem};
         //TODO: Add label to array
     }
-    
+
     if ( numArgs == 3 )
     {
         // there was code after the label
