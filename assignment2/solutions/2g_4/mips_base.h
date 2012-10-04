@@ -34,7 +34,7 @@
 #define REG_FP 30
 #define REG_RA 31
 
-extern int mem[MEM_SIZE];
+extern char mem[MEM_SIZE];
 extern int reg[32];
 extern int pc;
 

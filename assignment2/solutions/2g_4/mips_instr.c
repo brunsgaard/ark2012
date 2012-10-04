@@ -51,6 +51,11 @@ void lw_instr (int toreg, int addr)
 	writeReg(toreg, mem[addr]);
 }
 
+void la_instr (int rd, int addr)
+{
+    writeReg(rd, mem[addr]);
+}
+
 void sw_instr (int addr, int data)
 {
 	mem[addr] = data;

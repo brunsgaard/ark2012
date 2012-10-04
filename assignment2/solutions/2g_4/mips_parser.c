@@ -10,6 +10,7 @@
 char* code_mem[CODE_SIZE];
 int code_mem_index;
 Label* labels;
+int data_index = 0;
 
 void run_file (const char *filename)
 {
@@ -66,32 +67,14 @@ void parse_line (const char *line)
     char* copy = (char*) malloc(len * sizeof(char) );
     strcpy(copy, line);
     code_mem[code_mem_index] = copy;
+
     parse_labels(line);
     code_mem_index++;
-    
-    // Add labels to label list
-    // Add code to code list
-    // Run meta-instructions
-}
-
-void run_meta (const char *instr)
-{
-    // .space
-    if (strcmp(instr, ".space") == 0)
-    {
-
-    }
-
-    // .asciiz
-    if (strcmp(instr, ".asciiz") == 0)
-    {
-
-    }
 }
 
 void parse_labels (const char *line)
 {
-    
+
     char outLabel[30];
     char colonpresent[2];
     int howfarin = 0;
@@ -104,7 +87,6 @@ void parse_labels (const char *line)
 
     //printf("Label=%s Rest=%s #argsFound=%d #colons=%s howfarin=%d\n", outLabel, (haha+howfarin), numArgs, colonpresent, howfarin);
 
-    //printf("Label=%s Rest=%s #argsFound=%d #colons=%s\n", outLabel, rest, numArgs, colonpresent);
     if ( numArgs > 1 )
     {
         // we've got a label
@@ -122,9 +104,7 @@ void parse_labels (const char *line)
 
         code_mem_index++;
         code_mem[code_mem_index] = (copy + howfarin);
-        //TODO: remember to free after using
     }
-    
 }
 
 void parse_instruction(char* line)
@@ -188,4 +168,31 @@ void parse_instruction(char* line)
     }
 
     //TODO: Meta instructions
+}
+
+void run_meta (const char *instr)
+{
+    // .space
+    if (strcmp(instr, ".space") == 0)
+    {
+        int space = 0;
+        int read = sscanf(instr, "%*s %d", &space);
+
+        if (read == 1)
+        {
+            data_index += space;
+        }
+    }
+
+    // .asciiz
+    if (strcmp(instr, ".asciiz") == 0)
+    {
+        char* string;
+        int read = sscanf(instr, "%*s %*c%[^\"]", string);
+
+        if (read == 1)
+        {
+            strcpy(&mem[data_index], string);
+        }
+    }
 }
