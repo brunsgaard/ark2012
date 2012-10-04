@@ -40,6 +40,12 @@ void j_instr(Label label)
     pc = label.location;
 }
 
+void jal_instr(Label label)
+{
+    reg[REG_RA] = pc + 1;
+    pc = label.location;
+}
+
 void lw_instr (int toreg, int addr)
 {
 	writeReg(toreg, mem[addr]);
