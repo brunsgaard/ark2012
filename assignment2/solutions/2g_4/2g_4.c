@@ -10,7 +10,7 @@ void pleasekeepmytestingfunction()
 {
     // KEEP MY FREAKING TESTING FUNCTIONS!!!!
 
-    ///*
+    /*
     writeReg(toReg("$t0"), 16); // $t0 = 16
     printf("read $8: %d\n", regValFrmExp("$8") ); // $8 is 16, as $t0 == $8
     printf("read 1337 %d\n", regValFrmExp("1337") );
