@@ -27,6 +27,29 @@ void parse_file (const char *filename)
 
 void parse_line (const char *line)
 {
+    // Add labels to label list
+    // Add code to code list
+    // Run meta-instructions
+}
+
+void run_meta (const char *instr)
+{
+    // .space
+    if (strncmp(instr, ".space", 6) == 0)
+    {
+
+    }
+
+    // .asciiz
+    if (strncmp(instr, ".asciiz", 7) == 0)
+    {
+
+    }
+}
+
+void run_instr (const char *instr)
+{
+
 }
 
 char *parse_labels (char *line)
