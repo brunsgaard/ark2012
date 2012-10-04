@@ -7,7 +7,7 @@
 #include "mips_instr.h"
 
 // code mem is just a dummy variable that hold all the code in memory
-char* code_mem[2048];
+char* code_mem[CODE_SIZE];
 Label* labels;
 
 void run_file (const char *filename)
