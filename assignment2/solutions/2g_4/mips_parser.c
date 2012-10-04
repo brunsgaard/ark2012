@@ -29,6 +29,10 @@ void run_file (const char *filename)
     {
         // Run the current instruction
         parse_instruction(code_mem[pc]);
+
+        //for debug, enable this line
+        //printf("%s\n", (char*) code_mem[pc] );
+
         pc++;
     }
 }
@@ -44,7 +48,7 @@ void parse_file (const char *filename)
         exit(-1);
     }
 
-    while (fgets(linebuf, 1024, fp) != NULL)
+    while (fgets(linebuf, LINE_LENGTH, fp) != NULL)
     {
         parse_line(linebuf);
     }
@@ -58,8 +62,10 @@ void parse_file (const char *filename)
 
 void parse_line (const char *line)
 {
-    
-    code_mem[code_mem_index] = line;
+    int len = strlen(line);
+    char* copy = (char*) malloc(len * sizeof(char) );
+    strcpy(copy, line);
+    code_mem[code_mem_index] = copy;
     parse_labels(line);
     code_mem_index++;
     
@@ -88,13 +94,15 @@ void parse_labels (const char *line)
     
     char outLabel[30];
     char colonpresent[2];
-    char *rest = (char *) malloc(30 * sizeof(char));
+    int howfarin = 0;
+    char rest[2];
 
     outLabel[0] = '\0';
     colonpresent[0] = '\0';
-    rest[0] = '\0';
 
-    int numArgs = sscanf(line, " %[a-zA-Z]%[:]%[^\n]", outLabel, colonpresent, rest);
+    int numArgs = sscanf(line, " %[a-zA-Z]%[:]%n%[^\n]", outLabel, colonpresent, &howfarin, rest);
+
+    //printf("Label=%s Rest=%s #argsFound=%d #colons=%s howfarin=%d\n", outLabel, (haha+howfarin), numArgs, colonpresent, howfarin);
 
     //printf("Label=%s Rest=%s #argsFound=%d #colons=%s\n", outLabel, rest, numArgs, colonpresent);
     if ( numArgs > 1 )
@@ -108,12 +116,13 @@ void parse_labels (const char *line)
     if ( numArgs == 3 )
     {
         // there was code after the label
-        code_mem[code_mem_index] = rest;
+        int len = strlen(line);
+        char* copy = (char*) malloc(len * sizeof(char) );
+        strcpy(copy, line);
+
+        code_mem_index++;
+        code_mem[code_mem_index] = (copy + howfarin);
         //TODO: remember to free after using
-    }
-    else
-    {
-        free(rest);
     }
     
 }
