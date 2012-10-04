@@ -6,6 +6,10 @@
 #include "mips_parser.h"
 #include "mips_instr.h"
 
+// code mem is just a dummy variable that hold all the code in memory
+char* code_mem[2048];
+Label* labels;
+
 void run_file (const char *filename)
 {
     // First pass
@@ -21,6 +25,8 @@ void run_file (const char *filename)
     while (1)
     {
         // Run the current instruction
+
+        parse_instruction(*pc);
 
         pc++;
     }
@@ -45,11 +51,21 @@ void parse_file (const char *filename)
     fclose(fp);
 }
 
+// add all lines to the code_mem, when we encounter things not instructions,
+// we simply don't care when executing. When we encounter labels with code
+// after, we simply only save the part after the label in the code_mem
+
 void parse_line (const char *line)
 {
+    if ( 1 )
+    {
+        code_mem[0] = line;
+        parse_labels(line);
+        code_mem ++;
+    }
 }
 
-char *parse_labels (char *line)
+void parse_labels (const char *line)
 {
     char outLabel[30];
     char colonpresent[2];
@@ -62,27 +78,24 @@ char *parse_labels (char *line)
     int numArgs = sscanf(line, " %[a-zA-Z]%[:]%[^\n]", outLabel, colonpresent, rest);
 
     //printf("Label=%s Rest=%s #argsFound=%d #colons=%s\n", outLabel, rest, numArgs, colonpresent);
-    if ( numArgs < 2 )
+    if ( numArgs > 1 )
     {
-        // no label
-    }
-    else if ( numArgs == 2 )
-    {
-        // a label with no code after
+        // we've got a label
 
-        //TODO: Add label to array;
+        Label newLabel = {outLabel, code_mem};
+        //TODO: Add label to array
     }
-    else if ( numArgs == 3 )
+    
+    if ( numArgs == 3 )
     {
-        // a label with code after
-
+        // there was code after the label
+        code_mem[0] = rest;
         //TODO: remember to free after using
-
-        return rest;
     }
-
-    free(rest);
-    return NULL;
+    else
+    {
+        free(rest);
+    }
 }
 
 void parse_instruction(char* line)

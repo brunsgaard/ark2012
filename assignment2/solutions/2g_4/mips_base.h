@@ -34,13 +34,13 @@
 #define REG_FP 30
 #define REG_RA 31
 
-extern char* pc;
 extern int mem[MEM_SIZE];
 extern int reg[32];
+extern char** pc;
 
 typedef struct {
     char *name;
-    char *location;
+    char **location;
 } Label;
 
 int readReg(int regNum);
