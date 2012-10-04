@@ -9,8 +9,7 @@
 
 int mem[MEM_SIZE];
 int reg[32];
-
-char** pc;
+int pc;
 
 int readReg(int regNum)
 {

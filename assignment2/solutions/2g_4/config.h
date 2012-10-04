@@ -6,6 +6,7 @@
 #define STACK_START 1023
 
 // Parser settings
+#define CODE_SIZE 1024
 #define LINE_LENGTH 256
 
 #endif
