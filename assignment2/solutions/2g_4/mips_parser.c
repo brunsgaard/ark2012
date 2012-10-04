@@ -12,6 +12,18 @@ int code_mem_index;
 Label* labels;
 int data_index = 0;
 
+int label_address (const char *name)
+{
+    int num_labels = sizeof(labels) / sizeof(Label);
+    for (int i = 0; i < num_labels; i++)
+    {
+        if (strcmp(name, labels[i].name) == 0)
+        {
+            return labels[i].location;
+        }
+    }
+}
+
 void run_file (const char *filename)
 {
     // First pass
@@ -171,6 +183,7 @@ void parse_instruction(char* line)
     //TODO: Meta instructions
 }
 
+// TODO: Labels referencing meta instructions!
 void run_meta (const char *instr)
 {
     // .space
