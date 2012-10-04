@@ -8,14 +8,17 @@
 
 // code mem is just a dummy variable that hold all the code in memory
 char* code_mem[CODE_SIZE];
+int code_mem_index;
 Label* labels;
 
 void run_file (const char *filename)
 {
     // First pass
+    code_mem_index = 0;
     parse_file(filename);
 
     // Initialize machine
+    pc = 0;
     memset(mem, 0, MEM_SIZE);
     memset(reg, 0, 32);
     reg[REG_SP] = STACK_START;
@@ -55,11 +58,11 @@ void parse_file (const char *filename)
 
 void parse_line (const char *line)
 {
-    /*
-    code_mem[0] = line;
+    
+    code_mem[code_mem_index] = line;
     parse_labels(line);
-    code_mem ++;
-    */
+    code_mem_index++;
+    
     // Add labels to label list
     // Add code to code list
     // Run meta-instructions
@@ -82,7 +85,7 @@ void run_meta (const char *instr)
 
 void parse_labels (const char *line)
 {
-    /*
+    
     char outLabel[30];
     char colonpresent[2];
     char *rest = (char *) malloc(30 * sizeof(char));
@@ -98,21 +101,21 @@ void parse_labels (const char *line)
     {
         // we've got a label
 
-        Label newLabel = {outLabel, code_mem};
+        Label newLabel = {outLabel, code_mem_index};
         //TODO: Add label to array
     }
 
     if ( numArgs == 3 )
     {
         // there was code after the label
-        code_mem[0] = rest;
+        code_mem[code_mem_index] = rest;
         //TODO: remember to free after using
     }
     else
     {
         free(rest);
     }
-    */
+    
 }
 
 void parse_instruction(char* line)

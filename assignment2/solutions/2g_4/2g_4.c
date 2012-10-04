@@ -51,7 +51,7 @@ void pleasekeepmytestingfunction()
 
 int main(int argc, const char *argv[])
 {
-    pleasekeepmytestingfunction();
+    pleasekeepmytestingfunction(); //for now
 
     if (argc != 2)
     {
