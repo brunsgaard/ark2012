@@ -8,5 +8,6 @@
 // Parser settings
 #define CODE_SIZE 1024
 #define LINE_LENGTH 256
+#define LABEL_SIZE 256
 
 #endif

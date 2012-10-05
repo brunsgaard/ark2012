@@ -11,10 +11,10 @@ void slt_instr (int rd, int rs, int rt);
 void lw_instr (int rd, int addr);
 void la_instr (int rd, int addr);
 void sw_instr (int addr, int data);
-void beq_instr (int rs, int rt, Label label);
-void j_instr (Label label);
-void jr_instr (int rd);
-void jal_instr(Label label);
+void beq_instr (int rs, int rt, int pos);
+void j_instr (int pos);
+void jr_instr (int pos);
+void jal_instr(int pos);
 void syscall_instr ();
 
 #endif

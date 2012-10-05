@@ -30,25 +30,25 @@ void slt_instr (int rd, int rs, int rt)
     writeReg(rd, rs < rt);
 }
 
-void beq_instr (int rs, int rt, Label label)
+void beq_instr (int rs, int rt, int pos)
 {
-    if (rs == rt) pc = label.location;
+    if (rs == rt) pc = pos;
 }
 
-void j_instr (Label label)
+void j_instr (int pos)
 {
-    pc = label.location;
+    pc = pos;
 }
 
-void jal_instr (Label label)
+void jal_instr (int pos)
 {
-    reg[REG_RA] = pc + 1;
-    pc = label.location;
+    writeReg(REG_RA, pc + 1);
+    pc = pos;
 }
 
-void jr_instr (int rd)
+void jr_instr (int pos)
 {
-    pc = reg[rd];
+    pc = pos;
 }
 
 void lw_instr (int toreg, int addr)

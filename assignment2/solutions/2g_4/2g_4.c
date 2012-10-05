@@ -6,7 +6,7 @@
 //just for my testing function
 #include "mips_base.h"
 
-void pleasekeepmytestingfunction()
+int main(int argc, const char *argv[])
 {
     // KEEP MY FREAKING TESTING FUNCTIONS!!!!
 
@@ -49,11 +49,16 @@ void pleasekeepmytestingfunction()
     printf("%s\n", "nå");
     printf("%s\n", (char*) testarr[1] );
     //*/
-}
 
-int main(int argc, const char *argv[])
-{
-    pleasekeepmytestingfunction(); //for now
+    /*
+    printf("%s\n", "HVAD?");
+    Label testLabel = {"end", 123};
+    labels[0] = testLabel;
+
+    printf("%s\n", labels[0].name);
+
+    printf("%d\n", label_address("end") );
+    //*/
 
     if (argc != 2)
     {
