@@ -17,7 +17,7 @@ void pleasekeepmytestingfunction()
 
     printf("%d\n", swlwAddr("0($8)") );
     printf("%d\n", swlwAddr("4($8)"));
-    
+
     char* hej = "hej";
     Label test = {hej, 123};
     printf("%s\n", test.name);

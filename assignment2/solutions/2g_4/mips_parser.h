@@ -7,4 +7,6 @@ void parse_line (const char *line);
 void parse_labels (const char *line);
 void parse_instruction (char* line);
 
+void test_str(char *string);
+
 #endif

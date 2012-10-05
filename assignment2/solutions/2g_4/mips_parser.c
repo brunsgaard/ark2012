@@ -15,13 +15,16 @@ int data_index = 0;
 int label_address (const char *name)
 {
     int num_labels = sizeof(labels) / sizeof(Label);
-    for (int i = 0; i < num_labels; i++)
+    int i;
+    for (i = 0; i < num_labels; i++)
     {
         if (strcmp(name, labels[i].name) == 0)
         {
             return labels[i].location;
         }
     }
+
+    return -1;
 }
 
 void run_file (const char *filename)
