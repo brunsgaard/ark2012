@@ -43,11 +43,12 @@ void run_file (const char *filename)
     // Run code
     while (1)
     {
-        // Run the current instruction
-        parse_instruction(code_mem[pc]);
-
+        // TODO: add debug option to program, -d , would be awesome
         //for debug, enable this line
         printf("%s", (char*) code_mem[pc] );
+
+        // Run the current instruction
+        parse_instruction(code_mem[pc]);
 
         pc++;
     }
