@@ -7,7 +7,7 @@
 #include "mips_base.h"
 #include "mips_parser.h"
 
-char mem[MEM_SIZE];
+int mem[MEM_SIZE];
 int reg[32];
 int pc;
 
