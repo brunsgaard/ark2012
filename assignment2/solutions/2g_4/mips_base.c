@@ -72,7 +72,23 @@ int swlwAddr(char* in)
 	int offset;
 	char b[10];
 	int regVal;
-	sscanf(in,"%d(%s)", &offset, b);
-	regVal = readReg( toReg(b) );
-	return (regVal + offset)/4;
+
+	int read = sscanf(in,"%d(%s)", &offset, b);
+
+	if (read == 2)
+    {
+	    regVal = readReg( toReg(b) );
+	    return (regVal + offset)/4;
+	}
+
+	read = sscanf(in,"(%s)", b);
+    regVal = readReg( toReg(b) );
+
+	if (read == 1)
+    {
+	    return (regVal + 0)/4;
+    }
+
+    printf("Unable to parse memory reference %s\n", in);
+    exit(1);
 }
