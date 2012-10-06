@@ -9,6 +9,7 @@ void parse_file (const char *filename);
 void parse_line (const char *line);
 void parse_labels (const char *line);
 void parse_instruction (char* line);
+int run_meta(const char *line);
 
 extern Label labels[LABEL_SIZE];
 

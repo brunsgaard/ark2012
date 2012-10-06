@@ -61,7 +61,7 @@ int main(int argc, const char *argv[])
     printf("%d\n", label_address("end") );
     //*/
 
-    ///*
+    /*
     int intarr[100];
 
     strcpy( (char*) &intarr[7], "string");

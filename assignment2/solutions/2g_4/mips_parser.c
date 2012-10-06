@@ -30,11 +30,6 @@ int label_address (const char *name)
 
 void run_file (const char *filename)
 {
-    // First pass
-    code_mem_index = 0;
-    labels_added_index = 0;
-    parse_file(filename);
-
     // Initialize machine
     pc = 0;
     memset(mem, 0, MEM_SIZE);
@@ -42,12 +37,17 @@ void run_file (const char *filename)
     reg[REG_SP] = STACK_START;
     reg[REG_FP] = STACK_START;
 
+    // First pass
+    code_mem_index = 0;
+    labels_added_index = 0;
+    parse_file(filename);
+
     // Run code
     while (1)
     {
         // TODO: add debug option to program, -d , would be awesome
         //for debug, enable this line
-        printf("%s", code_mem[pc] );
+        //printf("%s", code_mem[pc] );
 
         // Run the current instruction
         parse_instruction(code_mem[pc]);
@@ -101,7 +101,7 @@ void parse_labels (const char *line)
     colonpresent[0] = '\0';
     rest[0] = '\0';
 
-    int numArgs = sscanf(line, " %[a-zA-Z]%[:]%n%[^\n]", outLabel, colonpresent, &howfarin, rest);
+    int numArgs = sscanf(line, " %[a-zA-Z]%[:] %n%[^\n]", outLabel, colonpresent, &howfarin, rest);
 
     //printf("Label=%s Rest=%s #argsFound=%d #colons=%s howfarin=%d\n", outLabel, rest, numArgs, colonpresent, howfarin);
 
@@ -115,12 +115,22 @@ void parse_labels (const char *line)
 
         Label* newLabel = malloc( sizeof(Label) );
         newLabel->name = label_copy;
-        newLabel->location = code_mem_index-1; //-1 because pc will be incremented by 1 when executing is done
+
+        if ( numArgs == 3 && rest[0] == '.')
+        {
+            // code after the label wich is meta instruction
+            newLabel->location = run_meta(rest);
+        }
+        else
+        {
+            newLabel->location = code_mem_index-1; //-1 because pc will be incremented by 1 when executing is done
+        }
+        
         labels[labels_added_index] = *newLabel;
         labels_added_index++;
     }
 
-    if ( numArgs == 3 )
+    if ( numArgs == 3 && rest[0] != '.' )
     {
         // there was code after the label
         int len = strlen(line);
@@ -173,7 +183,7 @@ void parse_instruction(char* line)
     }
     else if ( strcmp(cmd, "la") == 0)
     {
-        sw_instr( toReg(arg1), label_address(arg2) );
+        la_instr( toReg(arg1), label_address(arg2) );
     }
     else if ( strcmp(cmd, "sw") == 0)
     {
@@ -189,7 +199,6 @@ void parse_instruction(char* line)
     }
     else if ( strcmp(cmd, "jr") == 0 )
     {
-        printf("Jumping to %s at %d\n", arg1, regValFrmExp(arg1));
         jr_instr ( regValFrmExp(arg1) );
     }
     else if ( strcmp(cmd, "j") == 0)
@@ -200,10 +209,24 @@ void parse_instruction(char* line)
     {
         syscall_instr();
     }
-    else if (strcmp(cmd, ".space") == 0)
+}
+
+int run_meta (const char* line)
+{
+    char cmd[20];
+    char arg1[20];
+
+    cmd[0] = '\0';
+    arg1[0] = '\0';
+
+    sscanf(line, " %[.a-zA-Z] %s", cmd, arg1 );
+
+    int old_data_index = data_index;
+    if (strcmp(cmd, ".space") == 0)
     {
         int space = atoi(arg1);
         data_index += space;
+        return old_data_index;
     }
     else if (strcmp(cmd, ".asciiz") == 0)
     {
@@ -213,7 +236,12 @@ void parse_instruction(char* line)
         if (read == 1)
         {
             strncpy(((char *) mem) + data_index, string, strlen(string));
-            data_index += strlen(string);
+            //TODO: shouldn't it be: strlen(string)/4 + 1
+            data_index += strlen(string); 
+            return old_data_index;
         }
     }
+
+    printf("Error reading meta instruction: %s\n", cmd);
+    exit(123);
 }

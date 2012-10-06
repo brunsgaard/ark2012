@@ -58,7 +58,7 @@ void lw_instr (int toreg, int addr)
 
 void la_instr (int rd, int addr)
 {
-    writeReg(rd, mem[addr]);
+    writeReg(rd, addr);
 }
 
 void sw_instr (int data, int addr)
@@ -76,6 +76,13 @@ void syscall_instr ()
         case 1:
 	        printf("%d", reg[REG_A0]);
 	        break;
+
+        // Print string from mem
+        case 4: {
+            char* strstart = (char*) &mem[reg[REG_A0]];
+            printf("%s", strstart);
+            break;
+        }
 
         // Read integer
         case 5:
