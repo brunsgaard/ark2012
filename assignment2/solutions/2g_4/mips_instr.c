@@ -42,7 +42,7 @@ void j_instr (int pos)
 
 void jal_instr (int pos)
 {
-    writeReg(REG_RA, pc + 1);
+    writeReg(REG_RA, pc);
     pc = pos;
 }
 
