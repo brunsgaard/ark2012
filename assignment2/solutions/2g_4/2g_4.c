@@ -60,6 +60,10 @@ int main(int argc, const char *argv[])
     printf("%d\n", label_address("end") );
     //*/
 
+
+    // TODO: test sw/lw
+    // TODO: test meta instructions
+
     if (argc != 2)
     {
         printf("Usage: %s <filename>", argv[0]);

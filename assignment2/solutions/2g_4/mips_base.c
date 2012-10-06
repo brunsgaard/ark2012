@@ -7,7 +7,7 @@
 #include "mips_base.h"
 #include "mips_parser.h"
 
-char mem[MEM_SIZE];
+int mem[MEM_SIZE];
 int reg[32];
 int pc;
 
@@ -74,5 +74,5 @@ int swlwAddr(char* in)
 	int regVal;
 	sscanf(in,"%d(%s)", &offset, b);
 	regVal = readReg( toReg(b) );
-	return regVal + offset;
+	return (regVal + offset)/4;
 }

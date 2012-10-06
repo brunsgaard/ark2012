@@ -10,7 +10,7 @@ void or_instr (int rd, int rs, int rt);
 void slt_instr (int rd, int rs, int rt);
 void lw_instr (int rd, int addr);
 void la_instr (int rd, int addr);
-void sw_instr (int addr, int data);
+void sw_instr (int data, int addr);
 void beq_instr (int rs, int rt, int pos);
 void j_instr (int pos);
 void jr_instr (int pos);
