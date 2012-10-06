@@ -74,5 +74,5 @@ int swlwAddr(char* in)
 	int regVal;
 	sscanf(in,"%d(%s)", &offset, b);
 	regVal = readReg( toReg(b) );
-	return regVal + offset;
+	return (regVal + offset)/4;
 }
