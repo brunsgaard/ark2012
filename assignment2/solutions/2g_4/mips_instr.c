@@ -61,7 +61,7 @@ void la_instr (int rd, int addr)
     writeReg(rd, mem[addr]);
 }
 
-void sw_instr (int addr, int data)
+void sw_instr (int data, int addr)
 {
 	mem[addr] = data;
 }

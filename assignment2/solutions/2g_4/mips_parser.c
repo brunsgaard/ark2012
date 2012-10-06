@@ -173,7 +173,7 @@ void parse_instruction(char* line)
     }
     else if ( strcmp(cmd, "sw") == 0)
     {
-        sw_instr( toReg(arg1), swlwAddr(arg2) );
+        sw_instr( regValFrmExp(arg1), swlwAddr(arg2) );
     }
     else if ( strcmp(cmd, "beq") == 0)
     {
@@ -196,7 +196,7 @@ void parse_instruction(char* line)
         syscall_instr();
     }
 
-    //TODO: Meta instructions
+    //TODO: enable your freaking Meta instructions
 }
 
 // TODO: Labels referencing meta instructions!
