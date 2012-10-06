@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 #include "config.h"
 #include "mips_parser.h"
@@ -60,8 +61,18 @@ int main(int argc, const char *argv[])
     printf("%d\n", label_address("end") );
     //*/
 
+    ///*
+    int intarr[100];
 
-    // TODO: test sw/lw
+    strcpy( (char*) &intarr[7], "string");
+
+    char* hej = (char*) &intarr[7];
+    printf("%s\n", hej );
+
+    char* hej2 = (char*) &intarr[8];
+    printf("%s\n", hej2 );
+    //*/
+
     // TODO: test meta instructions
 
     if (argc != 2)

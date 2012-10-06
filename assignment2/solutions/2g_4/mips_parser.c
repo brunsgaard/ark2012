@@ -222,7 +222,7 @@ void run_meta (const char *instr)
 
         if (read == 1)
         {
-            strcpy(&mem[data_index], string);
+            strcpy( (char*) &mem[data_index], string);
         }
     }
 }
