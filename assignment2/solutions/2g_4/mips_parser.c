@@ -111,7 +111,7 @@ void parse_labels (const char *line)
 
         int label_len = strlen(outLabel);
         char* label_copy = (char*) malloc(label_len * sizeof(char) );
-        strcpy(label_copy, outLabel); 
+        strcpy(label_copy, outLabel);
 
         Label* newLabel = malloc( sizeof(Label) );
         newLabel->name = label_copy;
@@ -144,7 +144,7 @@ void parse_instruction(char* line)
     arg2[0] = '\0';
     arg3[0] = '\0';
 
-    sscanf(line, " %[a-zA-Z] %s %s %s", cmd, arg1, arg2, arg3 );
+    sscanf(line, " %[.a-zA-Z] %s %s %s", cmd, arg1, arg2, arg3 );
     //printf("Command=%s a1=%s a2=%s a3=%s\n", cmd, arg1, arg2, arg3);
 
     if ( strcmp(cmd, "add") == 0 )
@@ -171,6 +171,10 @@ void parse_instruction(char* line)
     {
         lw_instr( toReg(arg1), swlwAddr(arg2) );
     }
+    else if ( strcmp(cmd, "la") == 0)
+    {
+        sw_instr( toReg(arg1), label_address(arg2) );
+    }
     else if ( strcmp(cmd, "sw") == 0)
     {
         sw_instr( toReg(arg1), swlwAddr(arg2) );
@@ -185,6 +189,7 @@ void parse_instruction(char* line)
     }
     else if ( strcmp(cmd, "jr") == 0 )
     {
+        printf("Jumping to %s at %d\n", arg1, regValFrmExp(arg1));
         jr_instr ( regValFrmExp(arg1) );
     }
     else if ( strcmp(cmd, "j") == 0)
@@ -195,34 +200,20 @@ void parse_instruction(char* line)
     {
         syscall_instr();
     }
-
-    //TODO: Meta instructions
-}
-
-// TODO: Labels referencing meta instructions!
-void run_meta (const char *instr)
-{
-    // .space
-    if (strcmp(instr, ".space") == 0)
+    else if (strcmp(cmd, ".space") == 0)
     {
-        int space = 0;
-        int read = sscanf(instr, "%*s %d", &space);
-
-        if (read == 1)
-        {
-            data_index += space;
-        }
+        int space = atoi(arg1);
+        data_index += space;
     }
-
-    // .asciiz
-    if (strcmp(instr, ".asciiz") == 0)
+    else if (strcmp(cmd, ".asciiz") == 0)
     {
-        char* string;
-        int read = sscanf(instr, "%*s %*c%[^\"]", string);
+        char string[256];
+        int read = sscanf(line, "%*s \"%[^\"]", string);
 
         if (read == 1)
         {
-            strcpy(&mem[data_index], string);
+            strncpy(mem + data_index, string, strlen(string));
+            data_index += strlen(string);
         }
     }
 }
