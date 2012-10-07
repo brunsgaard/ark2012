@@ -10,8 +10,8 @@
 char* code_mem[CODE_SIZE];
 int code_mem_index;
 Label labels[LABEL_SIZE];
-int data_index = 0;
-int labels_added_index = 0;
+int data_index;
+int labels_added_index;
 
 int label_address (const char *name)
 {
@@ -40,6 +40,7 @@ void run_file (const char *filename)
     // First pass
     code_mem_index = 0;
     labels_added_index = 0;
+    data_index = 0;
     parse_file(filename);
 
     // Run code
@@ -239,9 +240,10 @@ int run_meta (const char* line)
 
         if (read == 1)
         {
-            strncpy(((char *) mem) + data_index, string, strlen(string));
+            strncpy((char *) &mem[data_index], string, strlen(string));
             //TODO: shouldn't it be: strlen(string)/4 + 1
             data_index += strlen(string);
+
             return old_data_index;
         }
     }

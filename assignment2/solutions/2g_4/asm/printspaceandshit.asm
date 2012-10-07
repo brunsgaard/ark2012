@@ -1,4 +1,5 @@
-space: .asciiz " you code like monkeys "
+array:	.space 40
+space: .asciiz " freaking fucking shit"
 main:
 	sub $a0, $0, 123
 	add $v0, $zero, 1
