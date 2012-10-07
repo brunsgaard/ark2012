@@ -179,7 +179,6 @@ void parse_instruction(char* line)
     }
     else if ( strcmp(cmd, "slt") == 0)
     {
-        printf("!!!we're doing a slt\n");
         slt_instr( toReg(arg1), regValFrmExp(arg2), regValFrmExp(arg3) );
     }
     else if ( strcmp(cmd, "lw") == 0)
