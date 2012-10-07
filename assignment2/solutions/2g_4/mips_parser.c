@@ -6,7 +6,6 @@
 #include "mips_parser.h"
 #include "mips_instr.h"
 
-// code mem is just a dummy variable that hold all the code in memory
 char* code_mem[CODE_SIZE];
 int code_mem_index;
 Label labels[LABEL_SIZE];
@@ -21,11 +20,11 @@ void run_file (const char *filename)
     memset(reg, 0, 32);
     reg[REG_SP] = STACK_START;
     reg[REG_FP] = STACK_START;
-
-    // First pass
     code_mem_index = 0;
     labels_added_index = 0;
     data_index = 0;
+
+    // First pass
     parse_file(filename);
 
     // Run code
@@ -69,10 +68,6 @@ void parse_line (const char *line)
     parse_labels(line);
     code_mem_index++;
 }
-
-// add all lines to the code_mem, when we encounter things not instructions,
-// we simply don't care when executing. When we encounter labels with code
-// after, we simply only save the part after the label in the code_mem
 
 void parse_labels (const char *line)
 {

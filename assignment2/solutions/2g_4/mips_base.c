@@ -73,7 +73,9 @@ int swlwAddr(char* in)
 	char b[10];
 	int regVal;
 
-	int read = sscanf(in,"%d(%s)", &offset, b);
+	memset(b, 0, 10);
+
+	int read = sscanf(in,"%d(%9s)", &offset, b);
 
 	if (read == 2)
     {
@@ -81,7 +83,7 @@ int swlwAddr(char* in)
 	    return (regVal + offset)/4;
 	}
 
-	read = sscanf(in,"(%s)", b);
+	read = sscanf(in,"(%9s)", b);
     regVal = readReg( toReg(b) );
 
 	if (read == 1)
