@@ -21,11 +21,11 @@ void run_file (const char *filename)
     memset(reg, 0, 32);
     reg[REG_SP] = STACK_START;
     reg[REG_FP] = STACK_START;
-
-    // First pass
     code_mem_index = 0;
     labels_added_index = 0;
     data_index = 0;
+
+    // First pass
     parse_file(filename);
 
     // Run code
