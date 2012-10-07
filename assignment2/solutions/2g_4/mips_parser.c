@@ -49,7 +49,7 @@ void parse_file (const char *filename)
     if (!fp)
     {
         printf("Unable to open the specified file for reading");
-        exit(-1);
+        exit(1);
     }
 
     while (fgets(linebuf, LINE_LENGTH, fp) != NULL)
@@ -80,15 +80,13 @@ void parse_labels (const char *line)
     char outLabel[48];
     char colonpresent[2];
     int howfarin = 0;
-    char rest[48];
+    char rest[256];
 
-    outLabel[0] = '\0';
-    colonpresent[0] = '\0';
-    rest[0] = '\0';
+    memset(outLabel, 0, 48);
+    memset(colonpresent, 0, 2);
+    memset(rest, 0, 256);
 
-    int numArgs = sscanf(line, " %[a-zA-Z]%[:] %n%[^\n]", outLabel, colonpresent, &howfarin, rest);
-
-    //printf("Label=%s Rest=%s #argsFound=%d #colons=%s howfarin=%d\n", outLabel, rest, numArgs, colonpresent, howfarin);
+    int numArgs = sscanf(line, " %47[a-zA-Z]%1[:] %n%255[^\n]", outLabel, colonpresent, &howfarin, rest);
 
     if ( numArgs > 1 )
     {
@@ -130,12 +128,12 @@ void parse_labels (const char *line)
 int run_meta (const char* line)
 {
     char cmd[20];
-    char arg1[20];
+    char arg1[64];
 
-    cmd[0] = '\0';
-    arg1[0] = '\0';
+    memset(cmd, 0, 20);
+    memset(arg1, 0, 20);
 
-    sscanf(line, " %[.a-zA-Z] %s", cmd, arg1 );
+    sscanf(line, " %19[.a-zA-Z] %63s", cmd, arg1 );
 
     int old_data_index = data_index;
     if (strcmp(cmd, ".space") == 0)
@@ -152,7 +150,6 @@ int run_meta (const char* line)
         if (read == 1)
         {
             strncpy((char *) &mem[data_index], string, strlen(string));
-            //TODO: shouldn't it be: strlen(string)/4 + 1
             data_index += strlen(string);
 
             return old_data_index;
@@ -160,7 +157,7 @@ int run_meta (const char* line)
     }
 
     printf("Error reading meta instruction: %s\n", cmd);
-    exit(123);
+    exit(1);
 }
 
 /*****************************
@@ -174,12 +171,12 @@ void parse_instruction(char* line)
     char arg2[10];
     char arg3[10];
 
-    cmd[0] = '\0';
-    arg1[0] = '\0';
-    arg2[0] = '\0';
-    arg3[0] = '\0';
+    memset(cmd, 0, 20);
+    memset(arg1, 0, 10);
+    memset(arg2, 0, 10);
+    memset(arg3, 0, 10);
 
-    sscanf(line, " %[.a-zA-Z] %s %s %s", cmd, arg1, arg2, arg3 );
+    sscanf(line, " %19[.a-zA-Z] %9s %9s %9s", cmd, arg1, arg2, arg3 );
 
     if ( strcmp(cmd, "add") == 0 )
     {
@@ -251,5 +248,5 @@ int label_address (const char *name)
     }
 
     printf("Error: Didn't find any matching labels for: %s\n", name);
-    exit(123);
+    exit(1);
 }
