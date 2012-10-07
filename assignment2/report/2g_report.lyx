@@ -68,11 +68,11 @@ Martin Bjerregaard Jepsen - 251190
 \begin_inset Newline newline
 \end_inset
 
-Rasmus Wriedt Larsen
+Rasmus Wriedt Larsen - 
 \begin_inset Newline newline
 \end_inset
 
-Jonas Brunsgaard
+Jonas Brunsgaard - 141185
 \end_layout
 
 \begin_layout Standard
@@ -80,6 +80,29 @@ Jonas Brunsgaard
 \end_inset
 
 
+\end_layout
+
+\begin_layout Section*
+G2.1 Caesar cipher i C
+\end_layout
+
+\begin_layout Standard
+We have developed a fully working program from the partially finished C
+ code, handed out as part of this assignment.
+ The source code is available from the zip file following this report.
+ The code is not advanced and thus not commented further.
+\end_layout
+
+\begin_layout Section*
+G2.2 Caesar cipher i MIPS assembly
+\end_layout
+
+\begin_layout Standard
+We have finished a fully working assemply program from the partially finished
+ MIPS assembly code, handed out for this assignment.
+ The source code is available from the zip file following this report.
+ Comments are available in the code, explaining how the assembly translates
+ to C code.
 \end_layout
 
 \begin_layout Section*
@@ -223,6 +246,40 @@ strncpy(buffer, string, MAXSIZE - 1);
 \end_inset
 
 
+\end_layout
+
+\begin_layout Section*
+G2.4 A MIPS simulator
+\end_layout
+
+\begin_layout Standard
+We have developed a MIPS-lite simulator.
+ Our simulator are able to parse and run the assembly test file handed out
+ as part of this assignment.
+ The source code are available from the zip file following this report.
+ One is able to test the program with the following commands(we added a
+ makefile).
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+make all
+\end_layout
+
+\begin_layout Plain Layout
+
+./2g_4 asm/test.asm   
+\end_layout
+
+\end_inset
+
+Now enter ten numbers (each must be follow by 'Enter'), and a partition
+ around the last number should be returned.
 \end_layout
 
 \end_body
