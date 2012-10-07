@@ -27,6 +27,7 @@ void or_instr (int rd, int rs, int rt)
 
 void slt_instr (int rd, int rs, int rt)
 {
+    printf("Slt %d = %d < %d = %d\n", rd, rs, rt, rs < rt);
     writeReg(rd, rs < rt);
 }
 

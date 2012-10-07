@@ -125,7 +125,7 @@ void parse_labels (const char *line)
         {
             newLabel->location = code_mem_index-1; //-1 because pc will be incremented by 1 when executing is done
         }
-        
+
         labels[labels_added_index] = *newLabel;
         labels_added_index++;
     }
@@ -160,6 +160,10 @@ void parse_instruction(char* line)
     if ( strcmp(cmd, "add") == 0 )
     {
         add_instr( toReg(arg1), regValFrmExp(arg2), regValFrmExp(arg3) );
+    }
+    else if ( strcmp(cmd, "move") == 0 )
+    {
+        add_instr( toReg(arg1), 0, regValFrmExp(arg2) );
     }
     else if ( strcmp(cmd, "sub") == 0)
     {
@@ -237,7 +241,7 @@ int run_meta (const char* line)
         {
             strncpy(((char *) mem) + data_index, string, strlen(string));
             //TODO: shouldn't it be: strlen(string)/4 + 1
-            data_index += strlen(string); 
+            data_index += strlen(string);
             return old_data_index;
         }
     }
