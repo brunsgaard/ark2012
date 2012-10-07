@@ -13,21 +13,6 @@ Label labels[LABEL_SIZE];
 int data_index;
 int labels_added_index;
 
-int label_address (const char *name)
-{
-    int i;
-    for (i = 0; i < labels_added_index; i++)
-    {
-        if (strcmp(name, labels[i].name) == 0)
-        {
-            return labels[i].location;
-        }
-    }
-
-    printf("Error: Didn't find any matching labels for: %s\n", name);
-    exit(123);
-}
-
 void run_file (const char *filename)
 {
     // Initialize machine
@@ -46,16 +31,15 @@ void run_file (const char *filename)
     // Run code
     while (1)
     {
-        // TODO: add debug option to program, -d , would be awesome
-        //for debug, enable this line
-        //printf("%s", code_mem[pc] );
-
         // Run the current instruction
         parse_instruction(code_mem[pc]);
-
         pc++;
     }
 }
+
+/*****************************
+ * FIRST PASS
+ *****************************/
 
 void parse_file (const char *filename)
 {
@@ -76,10 +60,6 @@ void parse_file (const char *filename)
     fclose(fp);
 }
 
-// add all lines to the code_mem, when we encounter things not instructions,
-// we simply don't care when executing. When we encounter labels with code
-// after, we simply only save the part after the label in the code_mem
-
 void parse_line (const char *line)
 {
     int len = strlen(line);
@@ -89,6 +69,10 @@ void parse_line (const char *line)
     parse_labels(line);
     code_mem_index++;
 }
+
+// add all lines to the code_mem, when we encounter things not instructions,
+// we simply don't care when executing. When we encounter labels with code
+// after, we simply only save the part after the label in the code_mem
 
 void parse_labels (const char *line)
 {
@@ -143,6 +127,46 @@ void parse_labels (const char *line)
     }
 }
 
+int run_meta (const char* line)
+{
+    char cmd[20];
+    char arg1[20];
+
+    cmd[0] = '\0';
+    arg1[0] = '\0';
+
+    sscanf(line, " %[.a-zA-Z] %s", cmd, arg1 );
+
+    int old_data_index = data_index;
+    if (strcmp(cmd, ".space") == 0)
+    {
+        int space = atoi(arg1);
+        data_index += space;
+        return old_data_index;
+    }
+    else if (strcmp(cmd, ".asciiz") == 0)
+    {
+        char string[256];
+        int read = sscanf(line, "%*s \"%[^\"]", string);
+
+        if (read == 1)
+        {
+            strncpy((char *) &mem[data_index], string, strlen(string));
+            //TODO: shouldn't it be: strlen(string)/4 + 1
+            data_index += strlen(string);
+
+            return old_data_index;
+        }
+    }
+
+    printf("Error reading meta instruction: %s\n", cmd);
+    exit(123);
+}
+
+/*****************************
+ * SECOND PASS
+ *****************************/
+
 void parse_instruction(char* line)
 {
     char cmd[20];
@@ -156,7 +180,6 @@ void parse_instruction(char* line)
     arg3[0] = '\0';
 
     sscanf(line, " %[.a-zA-Z] %s %s %s", cmd, arg1, arg2, arg3 );
-    //printf("Command=%s a1=%s a2=%s a3=%s\n", cmd, arg1, arg2, arg3);
 
     if ( strcmp(cmd, "add") == 0 )
     {
@@ -216,38 +239,17 @@ void parse_instruction(char* line)
     }
 }
 
-int run_meta (const char* line)
+int label_address (const char *name)
 {
-    char cmd[20];
-    char arg1[20];
-
-    cmd[0] = '\0';
-    arg1[0] = '\0';
-
-    sscanf(line, " %[.a-zA-Z] %s", cmd, arg1 );
-
-    int old_data_index = data_index;
-    if (strcmp(cmd, ".space") == 0)
+    int i;
+    for (i = 0; i < labels_added_index; i++)
     {
-        int space = atoi(arg1);
-        data_index += space;
-        return old_data_index;
-    }
-    else if (strcmp(cmd, ".asciiz") == 0)
-    {
-        char string[256];
-        int read = sscanf(line, "%*s \"%[^\"]", string);
-
-        if (read == 1)
+        if (strcmp(name, labels[i].name) == 0)
         {
-            strncpy((char *) &mem[data_index], string, strlen(string));
-            //TODO: shouldn't it be: strlen(string)/4 + 1
-            data_index += strlen(string);
-
-            return old_data_index;
+            return labels[i].location;
         }
     }
 
-    printf("Error reading meta instruction: %s\n", cmd);
+    printf("Error: Didn't find any matching labels for: %s\n", name);
     exit(123);
 }
