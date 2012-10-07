@@ -158,7 +158,23 @@ The file hack.asm implements a buffer-overflow against the g2 code.
 
  is defined to be 32 bytes, a src containing more bytes than this will overrun
  the buffer boundary and write into adjacent memory.
- 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
 \begin_inset listings
 inline false
 status open
@@ -186,6 +202,11 @@ char* strcpy(char* dst, const char* src) {
 \begin_layout Plain Layout
 
 }
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
