@@ -68,7 +68,7 @@ Martin Bjerregaard Jepsen - 251190
 \begin_inset Newline newline
 \end_inset
 
-Rasmus Wriedt Larsen - 
+Rasmus Wriedt Larsen - 070290
 \begin_inset Newline newline
 \end_inset
 
@@ -88,6 +88,47 @@ G3 Implementing a simple microarchitecture
 
 \begin_layout Standard
 Introduction here
+\end_layout
+
+\begin_layout Subsection*
+Basics
+\end_layout
+
+\begin_layout Standard
+Our microarchitecture is an implementation of a single-cycle processor as
+ described in COD and illustrated on page 329.
+\end_layout
+
+\begin_layout Subsection*
+Implementing I-instructions
+\end_layout
+
+\begin_layout Itemize
+Updated the control, and reused the functionality provided by the ALU
+\end_layout
+
+\begin_layout Subsection*
+Implementing Branch on not equal
+\end_layout
+
+\begin_layout Itemize
+Extra control line (ZeroInvert)
+\end_layout
+
+\begin_layout Subsection*
+Implementing jumps
+\end_layout
+
+\begin_layout Itemize
+Control line as specified by the book
+\end_layout
+
+\begin_layout Itemize
+Extra stuff to update $ra
+\end_layout
+
+\begin_layout Itemize
+RegtoPC control line from ALU control to update PC
 \end_layout
 
 \end_body
