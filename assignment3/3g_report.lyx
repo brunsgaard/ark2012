@@ -136,7 +136,39 @@ Testing the implementation
 \end_layout
 
 \begin_layout Standard
-JONAS!
+To test our processor we wrote up some Assembly test files using the MIPS
+ instructions that we have implemented.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+These files can be found in the directory 'tests' in the zip package
+\end_layout
+
+\end_inset
+
+ Afterwoulds we constructed a circuit
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+The circuit can be found in the file 'asm_to_ram.circ' which is part of the
+ zip package 
+\end_layout
+
+\end_inset
+
+ in Logisim converting the Assembly instructions to byte code.
+ 
+\end_layout
+
+\begin_layout Standard
+The bytecode was then loaded into the PC ram and executed in Logisim by
+ enable ticks.
+ Afterwards we compaired the values in the registers with the excepted values.
+ If the register held the expected values we said that the instruction has
+ been implemented correct.
+ All tests has passed one can see in the 'tests/testresults.txt'.
 \end_layout
 
 \end_body
