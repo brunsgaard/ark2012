@@ -131,5 +131,13 @@ Extra stuff to update $ra
 RegtoPC control line from ALU control to update PC
 \end_layout
 
+\begin_layout Subsection*
+Testing the implementation
+\end_layout
+
+\begin_layout Standard
+JONAS!
+\end_layout
+
 \end_body
 \end_document
