@@ -184,7 +184,7 @@ Basic jumps are implemented as specified in COD on page 328.
 \end_inset
 
  flag to the ALU control.
- This was necessary as the intruction is an R-format instruction, and thus
+ This was necessary as the instruction is an R-format instruction, and thus
  cannot be processed in the main control.
  When the 
 \begin_inset Formula $\texttt{RegtoPC}$
