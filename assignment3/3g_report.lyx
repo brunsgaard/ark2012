@@ -110,16 +110,40 @@ Our microarchitecture is an implementation of a single-cycle processor as
 Implementing I-instructions
 \end_layout
 
-\begin_layout Itemize
-Updated the control, and reused the functionality provided by the ALU
+\begin_layout Standard
+I-instructions were implemented by adding extra control logic that asserted
+ control lines such that the immediate values were fed to the ALU.
 \end_layout
 
 \begin_layout Subsection*
 Implementing Branch on not equal
 \end_layout
 
-\begin_layout Itemize
-Extra control line (ZeroInvert)
+\begin_layout Standard
+The 
+\begin_inset Formula $\texttt{beq}$
+\end_inset
+
+ instruction was implemented as specified in COD.
+ To implement the 
+\begin_inset Formula $\texttt{bne}$
+\end_inset
+
+ instruction, an additional control line called 
+\begin_inset Formula $\texttt{ZeroInvert}$
+\end_inset
+
+ was added.
+ Asserting this control line will invert the Zero result given by the ALU,
+ thus enabling us to reuse the 
+\begin_inset Formula $\texttt{beq}$
+\end_inset
+
+ functionality to implement 
+\begin_inset Formula $\texttt{bne}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection*
@@ -132,19 +156,41 @@ Basic jumps are implemented as specified in COD on page 328.
 \begin_inset Formula $\texttt{jal}$
 \end_inset
 
- instruction
-\end_layout
+ instruction a mux was added to the register file write address input.
+ This mux selects 
+\begin_inset Formula $\$31$
+\end_inset
 
-\begin_layout Itemize
-Control line as specified by the book
-\end_layout
+ if the 
+\begin_inset Formula $\texttt{jump}$
+\end_inset
 
-\begin_layout Itemize
-Extra stuff to update $ra
-\end_layout
+ flag is asserted.
+ A mux was also added to choose 
+\begin_inset Formula $\texttt{PC}+4$
+\end_inset
 
-\begin_layout Itemize
-RegtoPC control line from ALU control to update PC
+ as the write data instead of the ALU result if the 
+\begin_inset Formula $\texttt{jump}$
+\end_inset
+
+ flag is asserted.
+ The 
+\begin_inset Formula $\texttt{jr}$
+\end_inset
+
+ instruction was implemented by adding a 
+\begin_inset Formula $\texttt{RegtoPC}$
+\end_inset
+
+ flag to the ALU control.
+ This was necessary as the intruction is an R-format instruction, and thus
+ cannot be processed in the main control.
+ When the 
+\begin_inset Formula $\texttt{RegtoPC}$
+\end_inset
+
+ flag is asserted, a mux chooses the register A value as the next PC value.
 \end_layout
 
 \begin_layout Subsection*
