@@ -1,0 +1,11 @@
+Because the memory for data and instruction is shared, we have to use 2 clock cycles for the lw & sw instructions -- we've already used the memory to fetch the instruction.
+
+This is implemented by having a boolean, "Run Instr", indicating if we in the current clock cycle should run instructions or access memory for a lw/sw. We keep this value in a register, and update it on every clock cycle, only deasserting it when either of the control lines MemRead or MemWrite is asserted.
+
+We also store valeues for the things needed by the lw/sw instruciotns:
+sw/lw: The address (ALU Result) -- "lw/sw Addr"
+sw: Data (Reg B) -- "sw Data"
+lw: register write -- "lw rW"
+sw/lw: if we're currently doing sw or lw -- "is sw"
+
+If "Run Instr" is deasserted, we take the appropriate action depending on "is sw", and issue a NOP to the rest of the hardware -- so it's very important that the control lines MemRead and MemWrite are deasserted when a NOP occur, else the hardware would be stuck in the "don't-run-instructions-this-clock-cycle" state.
