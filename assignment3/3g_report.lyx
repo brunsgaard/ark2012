@@ -154,7 +154,7 @@ These files can be found in the directory 'tests' in the zip package
 
 \end_inset
 
- Afterwoulds we constructed a circuit
+ Afterwards we constructed a circuit
 \begin_inset Foot
 status open
 
@@ -172,10 +172,10 @@ The circuit can be found in the file 'asm_to_ram.circ' which is part of the
 \begin_layout Standard
 The bytecode was then loaded into the PC ram and executed in Logisim by
  enable ticks.
- Afterwards we compaired the values in the registers with the excepted values.
- If the register held the expected values we said that the instruction has
- been implemented correct.
- All tests has passed one can see in the 'tests/testresults.txt'.
+ Afterwards we compared the values in the registers with the excepted values.
+ If the register held the expected values we concluded that the instruction
+ had been implemented correctly.
+ All passed tests can be seen in the 'tests/testresults.txt' file.
 \end_layout
 
 \end_body
