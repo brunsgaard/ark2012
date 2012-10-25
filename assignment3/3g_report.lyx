@@ -104,6 +104,89 @@ Basics
 \begin_layout Standard
 Our microarchitecture is an implementation of a single-cycle processor as
  described in COD and illustrated on page 329.
+ Because the memory for data and instruction is shared, we have to use 2
+ clock cycles for the 
+\begin_inset Formula $\texttt{lw}$
+\end_inset
+
+ and 
+\begin_inset Formula $\texttt{sw}$
+\end_inset
+
+ instructions -- we've already used the memory to fetch the instruction.
+\end_layout
+
+\begin_layout Standard
+This is implemented by having a boolean, 
+\begin_inset Formula $\texttt{Run Instr}$
+\end_inset
+
+, indicating if we in the current clock cycle should run instructions or
+ access memory for a 
+\begin_inset Formula $\texttt{lw}$
+\end_inset
+
+/
+\begin_inset Formula $\texttt{sw}$
+\end_inset
+
+.
+ We keep this value in a register, and update it on every clock cycle, only
+ deasserting it when either of the control lines 
+\begin_inset Formula $\texttt{MemRead}$
+\end_inset
+
+ or 
+\begin_inset Formula $\texttt{MemWrite}$
+\end_inset
+
+ are asserted.
+\end_layout
+
+\begin_layout Standard
+We also store values for the things needed by the lw/sw instructions:
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+sw/lw: The address (ALU Result) -- "lw/sw Addr"
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+sw: Data (Reg B) -- "sw Data"
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+lw: register write -- "lw rW"
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+sw/lw: if we're currently doing sw or lw -- "is sw"
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $\texttt{Run Instr}$
+\end_inset
+
+ is deasserted, we take the appropriate action depending on 
+\begin_inset Formula $\texttt{is sw}$
+\end_inset
+
+, and issue a NOP to the rest of the hardware -- so it's very important
+ that the control lines 
+\begin_inset Formula $\texttt{MemRead}$
+\end_inset
+
+ and 
+\begin_inset Formula $\texttt{MemWrite}$
+\end_inset
+
+ are deasserted when a NOP occur, else the hardware would be stuck in the
+ "don't-run-instructions-this-clock-cycle" state.
 \end_layout
 
 \begin_layout Subsection*
