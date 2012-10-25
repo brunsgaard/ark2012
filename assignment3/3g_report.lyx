@@ -119,6 +119,15 @@ Extra control line (ZeroInvert)
 Implementing jumps
 \end_layout
 
+\begin_layout Standard
+Basic jumps are implemented as specified in COD on page 328.
+ To implement the 
+\begin_inset Formula $\texttt{jal}$
+\end_inset
+
+ instruction
+\end_layout
+
 \begin_layout Itemize
 Control line as specified by the book
 \end_layout
